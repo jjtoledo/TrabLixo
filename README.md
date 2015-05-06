@@ -1,5 +1,7 @@
 Trabalho da Diciplina CEA518 - Tópicos em Engenharia de Software II
+
 Professor: Igor Muzetti
+
 Integrantes do Grupo:
     José Junior
     Jean Carlos
