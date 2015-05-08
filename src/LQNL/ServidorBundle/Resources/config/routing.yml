@@ -1,0 +1,3 @@
+servidor_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ServidorBundle:Default:index }

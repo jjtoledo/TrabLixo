@@ -1,0 +1,39 @@
+autenticacao_usuarios:
+    resource: "@AutenticacaoBundle/Resources/config/routing/usuario.yml"
+    prefix:   /usuarios
+
+autenticacao_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AutenticacaoBundle:Default:index }
+    
+login:
+    path:     /
+    defaults: { _controller: AutenticacaoBundle:Login:login }
+
+login_check:
+    path:     /login_check
+
+login_teste:
+    path:     /login_teste
+    defaults: { _controller: AutenticacaoBundle:Login:teste }
+    
+logout:
+    path:     /logout
+
+
+home:
+    path:     /home
+    defaults: { _controller: AutenticacaoBundle:Login:home }
+
+
+novo_usuario:
+    path:     /novoUsuario
+    defaults: { _controller: AutenticacaoBundle:Usuario:new }
+
+recuperar_senha:
+    path:     /recuperarSenha
+    defaults: { _controller: AutenticacaoBundle:Usuario:recuperarsenha }
+    
+recuperando_senha:
+    path:     /recuperandoSenha
+    defaults: { _controller: AutenticacaoBundle:Usuario:recuperarandosenha }

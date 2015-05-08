@@ -1,0 +1,122 @@
+Solicitacao:
+    type: entity
+    table: solicitacao
+    indexes:
+        fk_solicitacao_disponibilidade1:
+            columns:
+                - disponibilidade1_id
+        fk_solicitacao_disponibilidade2:
+            columns:
+                - disponibilidade2_id
+        fk_solicitacao_disponibilidade3:
+            columns:
+                - disponibilidade3_id
+        fk_solicitacao_usuario1:
+            columns:
+                - usuario_id
+        fk_solicitacao_catador1:
+            columns:
+                - catador_id
+    id:
+        id:
+            type: bigint
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        data:
+            type: date
+            nullable: false
+            comment: ''
+        observacoes:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        papel:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+        metal:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+        eletronico:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+        vidro:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+        plastico:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+        outros:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+        status:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+    manyToOne:
+        catador:
+            targetEntity: Catador
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                catador_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        disponibilidade1:
+            targetEntity: Disponibilidade
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                disponibilidade1_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        disponibilidade2:
+            targetEntity: Disponibilidade
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                disponibilidade2_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        disponibilidade3:
+            targetEntity: Disponibilidade
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                disponibilidade3_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: Usuario
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

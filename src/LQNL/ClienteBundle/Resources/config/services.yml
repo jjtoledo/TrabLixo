@@ -1,0 +1,4 @@
+services:
+#    cliente.example:
+#        class: LQNL\ClienteBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

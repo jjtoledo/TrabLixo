@@ -1,0 +1,179 @@
+{#{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Usuario edit</h1>
+
+    {{ form(edit_form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('usuarios') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
+#}
+{% extends '::templateAll.html.twig' %}
+
+{% block barraNavegacao %}
+    <!-- Barra de Navegação -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">LQNL</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="navbar-inverse">
+                <ul class="nav navbar-nav">          
+                    <li><a href="#">Informações</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{{path('logout')}}" >Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+
+{% block menu %}
+{% endblock %}
+
+
+{% block container %}
+
+    <div class="col-lg-12">
+
+        <div class="col-lg-1">
+            {#        {{ form(form) }}#}
+        </div>
+
+        <div class="col-md-10">
+            <h1>Editar Usuário</h1>
+            {{form_start(form, { 'attr': {'class':'form-horizontal well'} })}}
+            <fieldset>
+                <div class="col-lg-8">
+                    <label class="control-label" for="input01">Nome completo: </label>
+                    <div class="controls">
+                        {{form_widget(form.nome)}}
+                        {{form_errors(form.nome)}}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <label class="control-label" for="input03">Telefone: </label>
+                    <div class="controls">
+                        {{form_widget(form.telefone, {'attr':{'placeholder':'(99)9999-9999', 'onkeypress':'mascaratel(this);'} }) }}
+                        {{form_errors(form.telefone)}}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <label class="control-label" >E-mail:</label>
+                    <div class="controls">
+                        {{ form_widget(form.username, {'attr':{'placeholder':'exemplo@email.com'} }) }}
+                        {{ form_errors(form.username) }}
+                        <p class="help-block">E-mail para login no sistema</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <label class="control-label" for="select02">Senha:</label>
+                    <div class="controls">
+                        {{ form_widget(form.password) }}
+                        {{ form_errors(form.password) }}
+                        <p class="help-block">Senha para login no sistema</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <label class="control-label" for="descricao">Endereço</label>                
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="control-label" >CEP:</label>
+                    <div class="controls">
+                        <input type="text" id="cep" name="cep" class="form-control" required="required" maxlength="9" onkeypress="mascaracep(this);" value="{{endereco.cep}}"/>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <label class="control-label" >Rua:</label>
+                    <div class="controls">
+                        <input type="text" id="rua" name="rua" class="form-control" required="required" value="{{endereco.rua}}"/>
+                    </div>
+                </div>
+                        
+                <div class="col-lg-2">
+                    <label class="control-label" >Número:</label>
+                    <div class="controls">
+                        <input type="number" id="numero" name="numero" class="form-control" required="required" value="{{endereco.numero}}"/>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <label class="control-label" >Bairro:</label>
+                    <div class="controls">
+                        <input type="text" id="bairro" name="bairro" class="form-control" required="required" value="{{endereco.bairro}}"/>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <label class="control-label" >Cidade:</label>
+                    <div class="controls">
+                        <input type="text" id="cidade" name="cidade" class="form-control" required="required" value="{{endereco.cidade}}"/>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <label class="control-label" >UF:</label>
+                    <div class="controls">
+                        <input type="text" id="uf" name="uf" class="form-control" required="required" value="{{endereco.uf}}"/>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <label class="control-label" >Complemento:</label>
+                    <div class="controls">
+                        <input type="text" id="complemento" name="complemento" class="form-control" value="{{endereco.complemento}}"/>
+                    </div>
+                </div>
+
+
+                <hr>
+
+                <div class="col-lg-12">
+                    <br/>
+                    <div class="form-actions">
+                        {{ form_widget(form.submit, { 'attr' : {'class': 'btn btn-primary'}, 'label': 'Salvar' }) }}
+                        <button type="reset" class="btn btn-warning">Limpar</button>
+                        {#                        <button type="reset" class="btn btn-info" href="{{path('home')}}">Cancelar</button>#}
+                        {#{{form(delete_form)}}#}
+                    </div>
+                </div>
+                {#{{ form_widget(form.chamadaNivel, { 'attr':{'style':'display: none;' } }) }}
+                {{ form_widget(form.descricaoSolucao, { 'attr':{'style':'display: none;' } }) }}
+                {{ form_widget(form.chamadaStatus, { 'attr':{'style':'display: none;'} }) }}#}
+            </fieldset>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function mascaratel(telefone) {
+            telefone.value = telefone.value.replace(/\D/g, "");             //Remove tudo o que não é dígito
+            telefone.value = telefone.value.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+            telefone.value = telefone.value.replace(/(\d)(\d{4})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+        }
+        
+        function mascaracep(telefone) {
+            telefone.value = telefone.value.replace(/\D/g, "");             //Remove tudo o que não é dígito
+            telefone.value = telefone.value.replace(/(\d)(\d{3})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+        }
+    </script>
+
+{% endblock %}

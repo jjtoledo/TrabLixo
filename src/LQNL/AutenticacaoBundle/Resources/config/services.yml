@@ -1,0 +1,11 @@
+services:
+#    autenticacao.example:
+#        class: LQNL\AutenticacaoBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+    usuario_provider:
+        class: LQNL\AutenticacaoBundle\Services\UsuarioProvider
+        arguments: [ @doctrine.orm.entity_manager ]
+    
+    custom_md5_encoder:
+        class: LQNL\AutenticacaoBundle\Services\CustomMD5PasswordEncoder
+        

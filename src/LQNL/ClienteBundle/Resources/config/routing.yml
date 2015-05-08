@@ -1,0 +1,3 @@
+cliente_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ClienteBundle:Default:index }

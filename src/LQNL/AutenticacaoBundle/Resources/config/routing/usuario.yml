@@ -1,0 +1,30 @@
+usuarios:
+    path:     /
+    defaults: { _controller: "AutenticacaoBundle:Usuario:index" }
+
+usuarios_show:
+    path:     /{id}/show
+    defaults: { _controller: "AutenticacaoBundle:Usuario:show" }
+
+usuarios_new:
+    path:     /new
+    defaults: { _controller: "AutenticacaoBundle:Usuario:new" }
+
+usuarios_create:
+    path:     /create
+    defaults: { _controller: "AutenticacaoBundle:Usuario:create" }
+    requirements: { _method: post }
+
+usuarios_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AutenticacaoBundle:Usuario:edit" }
+
+usuarios_update:
+    path:     /{id}/update
+    defaults: { _controller: "AutenticacaoBundle:Usuario:update" }
+    requirements: { _method: post|put }
+
+usuarios_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AutenticacaoBundle:Usuario:delete" }
+    requirements: { _method: post|delete }

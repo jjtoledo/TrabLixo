@@ -1,0 +1,57 @@
+Usuario:
+    type: entity
+    table: usuario
+    indexes:
+        fk_usuario_endereco:
+            columns:
+                - endereco_id
+    id:
+        id:
+            type: bigint
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nome:
+            type: string
+            nullable: false
+            length: 100
+            fixed: false
+            comment: ''
+        telefone:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+        username:
+            type: string
+            nullable: false
+            length: 100
+            fixed: false
+            comment: ''
+        password:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+        tipo:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+    manyToOne:
+        endereco:
+            targetEntity: Endereco
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                endereco_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

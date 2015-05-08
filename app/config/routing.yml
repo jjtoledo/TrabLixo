@@ -1,3 +1,15 @@
+servidor:
+    resource: "@ServidorBundle/Resources/config/routing.yml"
+    prefix:   /
+
+cliente:
+    resource: "@ClienteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+autenticacao:
+    resource: "@AutenticacaoBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
