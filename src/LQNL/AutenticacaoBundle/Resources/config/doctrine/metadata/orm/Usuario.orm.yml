@@ -24,7 +24,7 @@ Usuario:
         telefone:
             type: string
             nullable: false
-            length: 45
+            length: 15
             fixed: false
             comment: ''
         username:

@@ -27,10 +27,9 @@ ENGINE = InnoDB;
 CREATE  TABLE IF NOT EXISTS `lixoquenaoelixo`.`usuario` (
   `id` BIGINT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(100) NOT NULL ,
-  `email` VARCHAR(45) NOT NULL ,
   `telefone` VARCHAR(45) NOT NULL ,
-  `username` VARCHAR(45) NOT NULL ,
-  `password` VARCHAR(45) NOT NULL ,
+  `username` VARCHAR(100) NOT NULL ,
+  `password` VARCHAR(255) NOT NULL ,
   `tipo` BINARY NOT NULL ,
   `endereco_id` BIGINT UNSIGNED ZEROFILL NOT NULL ,
   PRIMARY KEY (`id`) ,
@@ -144,8 +143,8 @@ CREATE  TABLE IF NOT EXISTS `lixoquenaoelixo`.`recolhimento` (
 ENGINE = InnoDB;
 
 
-CREATE USER `lixo`;
-
+CREATE USER `lixo` IDENTIFIED BY 'lixo@icea.ufop.br';
+GRANT ALL ON *.* TO `lixo`@`localhost` IDENTIFIED BY 'lixo@icea.ufop.br';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
