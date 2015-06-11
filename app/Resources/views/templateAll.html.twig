@@ -10,6 +10,8 @@
         {% block stylesheets %}
             <link href="{{asset('bundles/autenticacao/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
             <link href="{{asset('bundles/autenticacao/css/styles.css')}}" rel="stylesheet" type="text/css">
+            {% block stylessheetsextra %}
+            {%endblock%}
         {% endblock %}
     </head>
 
@@ -23,7 +25,7 @@
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">LQNL</a>
+                        <a class="navbar-brand" href="{{path('login')}}">LQNL</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,13 +37,14 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 {#                                <label class="lead">          #}
-                                <a href="#">{{usuario.nome}}</a>
+                                <a href="{{ path('usuarios_show', { 'id': usuario.id }) }}">{{usuario.nome}}</a>
                                 {#                                </label>#}
                             </li>
                             {#<li>
                                 <a>{{data|date('d/M') }}</a>
                             </li>#}
                             <li>
+
                                 <a href="{{path('logout')}}">Sair</a>
                             </li>
                         </ul>
@@ -58,17 +61,16 @@
         <div class="container">
             <br/><br/><br/><br />
             <div class="col-lg-12">
-{#                <br/><br/><br/><br/>#}
+                {#                <br/><br/><br/><br/>#}
             </div>
             {% block menu %}
                 <div class="col-md-3">
                     <p class="lead">Menu</p>
                     <div class="list-group">
-                        <a href="#" class="list-group-item">Início</a>
-                        <a href="#" class="list-group-item">Abrir Solicitação</a>
-                        <a href="#" class="list-group-item">Minhas Solicitações</a>
-                        <a href="#" class="list-group-item">Fila de Espera</a>
-                        <a href="#" class="list-group-item">Todas Solicitações</a>
+                        <a class="list-group-item" href="{{path('home')}}">Início</a>
+                        <a href="{{ path('usuarios_show', { 'id': usuario.id }) }}" class="list-group-item">Meu Perfil</a>
+                        <a href="{{ path('solicitacao_new', { 'id': usuario.id }) }}" class="list-group-item">Gerar Solicitacao</a>
+                        <a href="{{ path('solicitacao')}}" class="list-group-item">Solicitacões</a>
                     </div>
                 </div>
             {% endblock %}
@@ -103,8 +105,11 @@
 
         {% block javascripts %}
             <!-- script references -->
-            <script src="{{asset('bundles/aut/js/jquery.js')}}" type="text/javascript"></script>
-            <script src="{{asset('bundles/aut/js/bootstrap.min.js')}}" type="text/javascript"></script>
+            <script src="{{asset('bundles/autenticacao/js/jquery.js')}}" type="text/javascript"></script>
+            <script src="{{asset('bundles/autenticacao/js/bootstrap.min.js')}}" type="text/javascript"></script>
+
+            {% block scriptsextra %}
+            {%endblock%}
         {% endblock %}
     </body>
 

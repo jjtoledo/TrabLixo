@@ -1,0 +1,30 @@
+solicitacao:
+    path:     /
+    defaults: { _controller: "ClienteBundle:Solicitacao:index" }
+
+solicitacao_show:
+    path:     /{id}/show
+    defaults: { _controller: "ClienteBundle:Solicitacao:show" }
+
+solicitacao_new:
+    path:     /new
+    defaults: { _controller: "ClienteBundle:Solicitacao:new" }
+
+solicitacao_create:
+    path:     /create
+    defaults: { _controller: "ClienteBundle:Solicitacao:create" }
+    requirements: { _method: post }
+
+solicitacao_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ClienteBundle:Solicitacao:edit" }
+
+solicitacao_update:
+    path:     /{id}/update
+    defaults: { _controller: "ClienteBundle:Solicitacao:update" }
+    requirements: { _method: post|put }
+
+solicitacao_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ClienteBundle:Solicitacao:delete" }
+    requirements: { _method: post|delete }

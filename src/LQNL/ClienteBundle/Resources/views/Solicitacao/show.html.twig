@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Solicitacao</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{{ entity.data|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Observacoes</th>
+                <td>{{ entity.observacoes }}</td>
+            </tr>
+            <tr>
+                <th>Papel</th>
+                <td>{{ entity.papel }}</td>
+            </tr>
+            <tr>
+                <th>Metal</th>
+                <td>{{ entity.metal }}</td>
+            </tr>
+            <tr>
+                <th>Eletronico</th>
+                <td>{{ entity.eletronico }}</td>
+            </tr>
+            <tr>
+                <th>Vidro</th>
+                <td>{{ entity.vidro }}</td>
+            </tr>
+            <tr>
+                <th>Plastico</th>
+                <td>{{ entity.plastico }}</td>
+            </tr>
+            <tr>
+                <th>Outros</th>
+                <td>{{ entity.outros }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ entity.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('solicitacao') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('solicitacao_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

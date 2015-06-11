@@ -1,0 +1,46 @@
+{% extends '::templateAll.html.twig' %}
+
+{% block container %}
+    <div class="col-lg-9">
+        <h1>Solicitações</h1>
+        <a class="btn btn-primary" href="{{ path('solicitacao_new') }}">
+            Nova Solicitação
+        </a>
+
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>Data Abertura</th>
+                    <th>Observacoes</th>
+                    <th>Papel</th>
+                    <th>Metal</th>
+                    <th>Eletronico</th>
+                    <th>Vidro</th>
+                    <th>Plastico</th>
+                    <th>Outros</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities | reverse %}
+                    <tr>
+                        <td>{% if entity.data %}{{ entity.data|date('d-m-Y H:i:s') }}{% endif %}</td>
+                        <td>{{ entity.observacoes }}</td>
+                        <td>{{ entity.papel }}</td>
+                        <td>{{ entity.metal }}</td>
+                        <td>{{ entity.eletronico }}</td>
+                        <td>{{ entity.vidro }}</td>
+                        <td>{{ entity.plastico }}</td>
+                        <td>{{ entity.outros }}</td>
+                        <td>{{ entity.status }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{{ path('solicitacao_show', { 'id': entity.id }) }}">show</a>
+                            <a class="btn btn-warning" href="{{ path('solicitacao_edit', { 'id': entity.id }) }}">edit</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

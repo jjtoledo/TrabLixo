@@ -1,4 +1,4 @@
-Solicitacao:
+LQNL\ClienteBundle\Entity\Solicitacao:
     type: entity
     table: solicitacao
     indexes:

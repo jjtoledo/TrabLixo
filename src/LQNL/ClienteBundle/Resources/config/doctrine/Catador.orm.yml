@@ -1,0 +1,50 @@
+LQNL\ClienteBundle\Entity\Catador:
+    type: entity
+    table: catador
+    indexes:
+        fk_catador_endereco1:
+            columns:
+                - endereco_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nome:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+        email:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+        telefone:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+        nascimento:
+            type: date
+            nullable: false
+            comment: ''
+    manyToOne:
+        endereco:
+            targetEntity: Endereco
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                endereco_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

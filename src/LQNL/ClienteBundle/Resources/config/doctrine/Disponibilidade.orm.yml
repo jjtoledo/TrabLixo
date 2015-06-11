@@ -1,0 +1,24 @@
+LQNL\ClienteBundle\Entity\Disponibilidade:
+    type: entity
+    table: disponibilidade
+    id:
+        id:
+            type: bigint
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        dia:
+            type: date
+            nullable: false
+            comment: ''
+        turno:
+            type: string
+            nullable: false
+            length: 20
+            fixed: false
+            comment: ''
+    lifecycleCallbacks: {  }

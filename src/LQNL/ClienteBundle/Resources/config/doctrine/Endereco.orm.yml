@@ -1,4 +1,4 @@
-Endereco:
+LQNL\ClienteBundle\Entity\Endereco:
     type: entity
     table: endereco
     id:

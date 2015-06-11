@@ -1,3 +1,7 @@
+cliente_solicitacao:
+    resource: "@ClienteBundle/Resources/config/routing/solicitacao.yml"
+    prefix:   /solicitacao
+
 cliente_homepage:
     path:     /hello/{name}
     defaults: { _controller: ClienteBundle:Default:index }

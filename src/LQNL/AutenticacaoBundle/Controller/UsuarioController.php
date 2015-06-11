@@ -68,13 +68,10 @@ class UsuarioController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('usuarios_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('login'));
         }
 
-        return $this->render('AutenticacaoBundle:Usuario:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView(),
-        ));
+        return $this->redirect($this->generateUrl('novo_usuario', array('id' => $entity->getId())));
     }
 
     /**
@@ -152,7 +149,7 @@ class UsuarioController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AutenticacaoBundle:Usuario:show.html.twig', array(
-                    'entity' => $entity,
+                    'usuario' => $entity,
                     'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -175,7 +172,7 @@ class UsuarioController extends Controller {
         $endereco = $em->getRepository('AutenticacaoBundle:Endereco')->find($entity->getEndereco());
 
         return $this->render('AutenticacaoBundle:Usuario:edit.html.twig', array(
-                    'entity' => $entity,
+                    'usuario' => $entity,
                     'endereco' => $endereco,
                     'form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -208,13 +205,12 @@ class UsuarioController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('usuarios_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('usuarios_show', array('id' => $id)));
         }
 
         return $this->render('AutenticacaoBundle:Usuario:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -238,7 +234,7 @@ class UsuarioController extends Controller {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('usuarios'));
+        return $this->redirect($this->generateUrl('login'));
     }
 
     /**
@@ -298,6 +294,20 @@ class UsuarioController extends Controller {
 //            $encoder = $this->get('security.encoder_factory')->getEncoder($entity);
 //            $encodedPass = $encoder->encodePassword($entity->getTelefone(), $entity->getSalt());
 //            $entity->setPassword($encodedPass);
+            $novaSenha = base64_encode(rand(0, 1000));
+            $encoder = $this->get('security.encoder_factory')->getEncoder($entity);
+            $encodedPass = $encoder->encodePassword($novaSenha, $entity->getSalt());
+            $entity->setPassword($encodedPass);
+            $em->flush();
+            $messageCliente = \Swift_Message::newInstance()
+                    ->setSubject('Recuperar Senha - LQNL')
+                    ->setFrom('testeletiva@gmail.com', 'LQNL - Recuperar Senha')
+                    ->setTo($request->get('_username'))
+                    ->setBody($this->renderView('::emailTemplate.html.twig', array(
+                        'mensagem' => 'Nova senha: ' . $novaSenha,
+                    )), 'text/html');
+            $this->get('mailer')->send($messageCliente);
+
             return $this->render('AutenticacaoBundle:Usuario:recuperarSenha.html.twig', array(
                         'error' => 'Uma nova senha foi enviada para seu e-mail, verifique sua caixa de entrada em alguns instantes!'
             ));

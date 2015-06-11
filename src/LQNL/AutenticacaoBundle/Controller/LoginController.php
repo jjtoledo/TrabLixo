@@ -34,29 +34,22 @@ class LoginController extends Controller {
 
     public function homeAction() {
         $user = $this->getUser();
-        if (in_array("ROLE_USER", $user->getRoles())) {
-            return $this->render('AutenticacaoBundle:Login:home.html.twig', array(
-                        'usuario' => $user,
-            ));
-        }
-        if (in_array("ROLE_ADMIN", $user->getRoles())) {
-            return $this->render('AutenticacaoBundle:Login:home.html.twig', array(
-                        'usuario' => $user,
-            ));
-        }
+        return $this->render('AutenticacaoBundle:Login:home.html.twig', array(
+                    'usuario' => $user,
+        ));
     }
-    
+
     public function testeAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $usuario = $em->getRepository('AutenticacaoBundle:Usuario')->findOneBy(array('username'=>$request->get('username')));
-        
+        $usuario = $em->getRepository('AutenticacaoBundle:Usuario')->findOneBy(array('username' => $request->get('username')));
+
         $encoder = $this->get('security.encoder_factory')->getEncoder(new Usuario());
         $encodedPass = $encoder->encodePassword($request->get('_password'), null);
-        
+
         echo 'Username:   ' . $request->get('_username');
         echo 'Password digitado:   ' . $encodedPass;
         echo '<br/> <br/> Password bd:   ' . $usuario->getPassword();
-        
+
         exit(0);
     }
 

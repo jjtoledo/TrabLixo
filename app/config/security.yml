@@ -6,8 +6,9 @@ security:
             iterations: 7
 
     role_hierarchy:
+        ROLE_USER:       IS_AUTHENTICATED_ANONYMOUSLY
         ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN]
     
     providers:
         usuario_db:
@@ -18,27 +19,32 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
-            pattern:  ^/demo/secured/login$
-            security: false
 
         secured_area:
             pattern:    ^/
+            anonymous: ~
             
             form_login:
                 login_path:  /
                 check_path:  /login_check
                 default_target_path: /home
-                always_use_default_target_path: true
-                use_referer: false
+                always_use_default_target_path: false
+                use_referer: true
             logout:
                 path:  /logout
-            anonymous: ~
 #            http_basic:
 #                realm: "Secured Demo Area"
 
     access_control:
-        - { path: ^/demo/secured/hello/admin/, roles: ROLE_ADMIN }
 #        - { path: ^/demo/secured/hello/admin/, roles: ROLE_ADMIN }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/demo/secured/hello/admin/, roles: ROLE_ADMIN }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/novoUsuario, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/recuperarSenha, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/recuperandoSenha, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/home, roles: ROLE_USER }
+        - { path: ^/edit, roles: ROLE_USER }
+        - { path: ^/show, roles: ROLE_USER }
+        - { path: ^/solicitacao, roles: ROLE_USER }
+#        - { path: ^/usuarios, roles: ROLE_USER }

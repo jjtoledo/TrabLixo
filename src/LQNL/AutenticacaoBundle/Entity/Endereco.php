@@ -211,7 +211,7 @@ class Endereco {
      * @return string 
      */
     public function __toString() {
-        return $this->rua. " Bairro: " . $this->bairro;
+        return 'Rua ' . $this->rua . ' nº ' . $this->getNumero() . ", Bairro " . $this->bairro . ', '. $this->getCidade() . ' - '. $this->getUf() . ', Complemento: ' . $this->getComplemento();
     }
 
 }

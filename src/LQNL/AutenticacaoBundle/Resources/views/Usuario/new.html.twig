@@ -152,9 +152,9 @@
             telefone.value = telefone.value.replace(/(\d)(\d{4})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
         }
         
-        function mascaracep(telefone) {
-            telefone.value = telefone.value.replace(/\D/g, "");             //Remove tudo o que não é dígito
-            telefone.value = telefone.value.replace(/(\d)(\d{3})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+        function mascaracep(cep) {
+            cep.value = cep.value.replace(/\D/g, "");             //Remove tudo o que não é dígito
+            cep.value = cep.value.replace(/(\d)(\d{2})$/, "$1-$2");    
         }
     </script>
 
