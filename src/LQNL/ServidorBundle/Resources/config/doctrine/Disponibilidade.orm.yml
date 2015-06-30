@@ -1,4 +1,4 @@
-LQNL\ClienteBundle\Entity\Disponibilidade:
+LQNL\ServidorBundle\Entity\Disponibilidade:
     type: entity
     table: disponibilidade
     indexes:

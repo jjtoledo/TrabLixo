@@ -1,0 +1,251 @@
+<?php
+
+namespace LQNL\ServidorBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Recolhimento
+ */
+class Recolhimento
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     */
+    private $data;
+
+    /**
+     * @var float
+     */
+    private $papel;
+
+    /**
+     * @var float
+     */
+    private $metal;
+
+    /**
+     * @var float
+     */
+    private $eletronico;
+
+    /**
+     * @var float
+     */
+    private $vidro;
+
+    /**
+     * @var float
+     */
+    private $plastico;
+
+    /**
+     * @var float
+     */
+    private $outros;
+
+    /**
+     * @var float
+     */
+    private $total;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set data
+     *
+     * @param \DateTime $data
+     * @return Recolhimento
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Get data
+     *
+     * @return \DateTime 
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Set papel
+     *
+     * @param float $papel
+     * @return Recolhimento
+     */
+    public function setPapel($papel)
+    {
+        $this->papel = $papel;
+
+        return $this;
+    }
+
+    /**
+     * Get papel
+     *
+     * @return float 
+     */
+    public function getPapel()
+    {
+        return $this->papel;
+    }
+
+    /**
+     * Set metal
+     *
+     * @param float $metal
+     * @return Recolhimento
+     */
+    public function setMetal($metal)
+    {
+        $this->metal = $metal;
+
+        return $this;
+    }
+
+    /**
+     * Get metal
+     *
+     * @return float 
+     */
+    public function getMetal()
+    {
+        return $this->metal;
+    }
+
+    /**
+     * Set eletronico
+     *
+     * @param float $eletronico
+     * @return Recolhimento
+     */
+    public function setEletronico($eletronico)
+    {
+        $this->eletronico = $eletronico;
+
+        return $this;
+    }
+
+    /**
+     * Get eletronico
+     *
+     * @return float 
+     */
+    public function getEletronico()
+    {
+        return $this->eletronico;
+    }
+
+    /**
+     * Set vidro
+     *
+     * @param float $vidro
+     * @return Recolhimento
+     */
+    public function setVidro($vidro)
+    {
+        $this->vidro = $vidro;
+
+        return $this;
+    }
+
+    /**
+     * Get vidro
+     *
+     * @return float 
+     */
+    public function getVidro()
+    {
+        return $this->vidro;
+    }
+
+    /**
+     * Set plastico
+     *
+     * @param float $plastico
+     * @return Recolhimento
+     */
+    public function setPlastico($plastico)
+    {
+        $this->plastico = $plastico;
+
+        return $this;
+    }
+
+    /**
+     * Get plastico
+     *
+     * @return float 
+     */
+    public function getPlastico()
+    {
+        return $this->plastico;
+    }
+
+    /**
+     * Set outros
+     *
+     * @param float $outros
+     * @return Recolhimento
+     */
+    public function setOutros($outros)
+    {
+        $this->outros = $outros;
+
+        return $this;
+    }
+
+    /**
+     * Get outros
+     *
+     * @return float 
+     */
+    public function getOutros()
+    {
+        return $this->outros;
+    }
+
+    /**
+     * Set total
+     *
+     * @param float $total
+     * @return Recolhimento
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * Get total
+     *
+     * @return float 
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+}

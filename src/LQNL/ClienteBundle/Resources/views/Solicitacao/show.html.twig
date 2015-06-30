@@ -1,64 +1,109 @@
-{% extends '::base.html.twig' %}
+{% extends '::templateAll.html.twig' %}
 
-{% block body -%}
-    <h1>Solicitacao</h1>
+{% block container %}
+    <div class="col-lg-9">
+        <div class="col-lg-10">
+            <h4><a class="btn btn-primary label" href="{{ path('solicitacao') }}"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a> Solicitação ID: {{ entity.id | number_format }} </h4>
+        </div>
+        <div class="col-lg-1">
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Data</th>
-                <td>{{ entity.data|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Observacoes</th>
-                <td>{{ entity.observacoes }}</td>
-            </tr>
-            <tr>
-                <th>Papel</th>
-                <td>{{ entity.papel }}</td>
-            </tr>
-            <tr>
-                <th>Metal</th>
-                <td>{{ entity.metal }}</td>
-            </tr>
-            <tr>
-                <th>Eletronico</th>
-                <td>{{ entity.eletronico }}</td>
-            </tr>
-            <tr>
-                <th>Vidro</th>
-                <td>{{ entity.vidro }}</td>
-            </tr>
-            <tr>
-                <th>Plastico</th>
-                <td>{{ entity.plastico }}</td>
-            </tr>
-            <tr>
-                <th>Outros</th>
-                <td>{{ entity.outros }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ entity.status }}</td>
-            </tr>
-        </tbody>
-    </table>
+        </div>
+        <table class="table table-responsive table-hover">
+            <tbody>
+                <tr>
+                    <th>Data de Abertura</th>
+                    <td colspan="3">{{ entity.data|date('d-m-Y') }}</td>
+                </tr>
+                <tr>
+                    <th>Observações</th>
+                    <td colspan="3"><textarea class="form-control" readonly="true" style="background-color: #FFFFFF; width: 680px; height: 45px;">{{ entity.observacoes }}</textarea></td>
+                </tr>
+                <tr style="background-color: #66afe9"><td colspan="4"></td></tr>
+                <tr>
+                    <th colspan="4">Quantidade de Lixo:</th>
+                </tr>
+                <tr>
+                    <th width="25%">Papel</th>
+                    <td width="25%">{{ entity.papel }}</td>
+                    <th width="25%">Metal</th>
+                    <td width="25%">{{ entity.metal }}</td>
+                </tr>
+                <tr>
+                    <th>Eletrônico</th>
+                    <td>{{ entity.eletronico }}</td>
+                    <th>Vidro</th>
+                    <td>{{ entity.vidro }}</td>
+                </tr>
+                <tr>
+                    <th width="25%">Plástico</th>
+                    <td width="25%">{{ entity.plastico }}</td>
+                    <th width="25%">Outros</th>
+                    <td width="25%">{{ entity.outros }}</td>
+                </tr>
+                <tr style="background-color: #66afe9"><td colspan="4"></td></tr>
+                <tr>
+                    <th colspan="4">Dias disponíveis para atendimento:</th>
+                </tr>
+                <tr>
+                    <th width="25%">Dia</th>
+                    <td width="25%">{{ entity.disponibilidade1.dia | date('d/m/Y') }}</td>
+                    <th width="25%">Turno</th>
+                    <td width="25%">{{ entity.disponibilidade1.turno }}</td>
+                </tr>
+                <tr>
+                    <th width="25%">Dia</th>
+                    <td width="25%">{{ entity.disponibilidade2.dia | date('d/m/Y') }}</td>
+                    <th width="25%">Turno</th>
+                    <td width="25%">{{ entity.disponibilidade2.turno }}</td>
+                </tr>
+                {% if entity.disponibilidade3 %}
+                    <tr>
+                        <th width="25%">Dia</th>
+                        <td width="25%">{{ entity.disponibilidade3.dia | date('d/m/Y') }}</td>
+                        <th width="25%">Turno</th>
+                        <td width="25%">{{ entity.disponibilidade3.turno }}</td>
+                    </tr>
+                {% endif %}
+                <tr style="background-color: #66afe9"><td colspan="4"></td></tr>
+                <tr>
+                    <th>Status</th>
+                    <td colspan="3">{{ entity.status }}</td>
+                </tr>
+                <tr>
+                    {% if entity.status == "Em Aberto" %}
+                        <th colspan="3"><h4><a class="btn btn-warning label" href="{{ path('solicitacao_edit', { 'id': entity.id }) }}">Editar</a></h4></th>
+                        <th align="right"><h4><a type="button" class="btn btn-danger label" data-toggle="modal" data-target="#exampleModal">Cancelar Solicitação</a></h4></th>
+                        {#                    <a class="btn btn-danger label" href="{{ path('solicitacao_cancelar', { 'id': entity.id }) }}">Cancelar</a>#}
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('solicitacao') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('solicitacao_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert">
+                        <span><h5><b>Atenção!</b><br/>Deseja realmente cancelar esta solicitação?</h5></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <table>
+                        <tr>
+                            <td class='col-lg-9'> 
+                                <button type="button" class="btn btn-default"     data-dismiss="modal">Nao</button>
+                            </td>
+                            <td> 
+                                <a class="btn text-danger" href="{{ path('solicitacao_cancelar', { 'id': entity.id }) }}">Sim, desejo cancelar</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -28,3 +28,7 @@ solicitacao_delete:
     path:     /{id}/delete
     defaults: { _controller: "ClienteBundle:Solicitacao:delete" }
     requirements: { _method: post|delete }
+    
+solicitacao_cancelar:
+    path:     /{id}/cancelar
+    defaults: { _controller: "ClienteBundle:Solicitacao:cancelar" }

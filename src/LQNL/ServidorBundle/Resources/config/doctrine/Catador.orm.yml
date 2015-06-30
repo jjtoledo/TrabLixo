@@ -1,13 +1,13 @@
-LQNL\ClienteBundle\Entity\Disponibilidade:
+LQNL\ServidorBundle\Entity\Catador:
     type: entity
-    table: disponibilidade
+    table: catador
     indexes:
-        fk_disponibilidade_responsavel:
+        fk_catador_endereco1:
             columns:
-                - responsavel
+                - endereco_id
     id:
         id:
-            type: bigint
+            type: integer
             nullable: false
             unsigned: true
             comment: ''
@@ -15,24 +15,36 @@ LQNL\ClienteBundle\Entity\Disponibilidade:
             generator:
                 strategy: IDENTITY
     fields:
-        dia:
+        nome:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+        email:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+        telefone:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+        nascimento:
             type: date
             nullable: false
             comment: ''
-        turno:
-            type: string
-            nullable: false
-            length: 20
-            fixed: false
-            comment: ''
     manyToOne:
-        responsavel:
-            targetEntity: Usuario
+        endereco:
+            targetEntity: Endereco
             cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
-                responsavel:
+                endereco_id:
                     referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }

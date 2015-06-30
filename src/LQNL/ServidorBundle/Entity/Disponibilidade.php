@@ -1,6 +1,6 @@
 <?php
 
-namespace LQNL\ClienteBundle\Entity;
+namespace LQNL\ServidorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,9 +25,10 @@ class Disponibilidade
     private $turno;
 
     /**
-     * @var \LQNL\ClienteBundle\Entity\Usuario
+     * @var \LQNL\ServidorBundle\Entity\Usuario
      */
     private $responsavel;
+
 
     /**
      * Get id
@@ -84,14 +85,14 @@ class Disponibilidade
     {
         return $this->turno;
     }
-    
+
     /**
      * Set responsavel
      *
-     * @param \LQNL\ClienteBundle\Entity\Usuario $responsavel
-     * @return Solicitacao
+     * @param \LQNL\ServidorBundle\Entity\Usuario $responsavel
+     * @return Disponibilidade
      */
-    public function setResponsavel(\LQNL\ClienteBundle\Entity\Usuario $responsavel = null)
+    public function setResponsavel(\LQNL\ServidorBundle\Entity\Usuario $responsavel = null)
     {
         $this->responsavel = $responsavel;
 
@@ -101,14 +102,10 @@ class Disponibilidade
     /**
      * Get responsavel
      *
-     * @return \LQNL\ClienteBundle\Entity\Usuario 
+     * @return \LQNL\ServidorBundle\Entity\Usuario 
      */
     public function getResponsavel()
     {
         return $this->responsavel;
-    }
-    
-    public function __toString() {
-        return $this->dia->format('d-m-Y');
     }
 }

@@ -22,7 +22,6 @@ class SolicitacaoController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $entities = $em->getRepository('ClienteBundle:Solicitacao')->findBy(array('usuario' => $user));
-
         return $this->render('ClienteBundle:Solicitacao:index.html.twig', array(
                     'usuario' => $user,
                     'entities' => $entities,
@@ -38,16 +37,17 @@ class SolicitacaoController extends Controller {
         $user = $em->getRepository('ClienteBundle:Usuario')->find($this->getUser()->getId());
         $status = "Em Aberto";
         $dataabertura = new \DateTime;
-        $disponibilidades = $this->validaDisponibilidade($request->get('disp1'), $request->get('disp2'), $request->get('disp3'), $request);
+        $disponibilidades = $this->validaDisponibilidade($user, $request);
         if ($disponibilidades) {
             $i = 0;
+            $user = $em->getRepository('ClienteBundle:Usuario')->find($this->getUser()->getId());
             foreach ($disponibilidades as $disponibilidade) {
                 $em->persist($disponibilidade);
                 $em->flush();
                 $i++;
             }
 
-            $disp = $entity = $em->getRepository('ClienteBundle:Disponibilidade')->findBy(array(), array('id' => 'DESC'));
+            $disp = $entity = $em->getRepository('ClienteBundle:Disponibilidade')->findBy(array('responsavel' => $user->getId()), array('id' => 'DESC'));
 
             $entity = new Solicitacao();
             $form = $this->createCreateForm($entity);
@@ -58,12 +58,15 @@ class SolicitacaoController extends Controller {
             $entity->setData($dataabertura);
 
             if ($i > 2) {
-                $entity->setDisponibilidade3($disp[2]);
+                $entity->setDisponibilidade3($disp[0]);
                 $entity->setDisponibilidade2($disp[1]);
+                $entity->setDisponibilidade1($disp[2]);
             } elseif ($i > 1) {
-                $entity->setDisponibilidade2($disp[1]);
+                $entity->setDisponibilidade2($disp[0]);
+                $entity->setDisponibilidade1($disp[1]);
+            } elseif ($i == 1) {
+                $entity->setDisponibilidade1($disp[0]);
             }
-            $entity->setDisponibilidade1($disp[0]);
 
             if ($form->isValid()) {
                 $em->persist($entity);
@@ -121,23 +124,23 @@ class SolicitacaoController extends Controller {
      * Finds and displays a Solicitacao entity.
      *
      */
-//    public function showAction($id) {
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $entity = $em->getRepository('ClienteBundle:Solicitacao')->find($id);
-//
-//        if (!$entity) {
-//            throw $this->createNotFoundException('Unable to find Solicitacao entity.');
-//        }
-//
-//        $deleteForm = $this->createDeleteForm($id);
-//
-//        return $this->render('ClienteBundle:Solicitacao:show.html.twig', array(
-//                    'entity' => $entity,
-//                    'delete_form' => $deleteForm->
-//                            createView(),
-//        ));
-//    }
+    public function showAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('ClienteBundle:Solicitacao')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Solicitacao entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('ClienteBundle:Solicitacao:show.html.twig', array(
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
+                    'usuario' => $this->getUser()
+        ));
+    }
 
     /**
      * Displays a form to edit an existing Solicitacao entity.
@@ -147,7 +150,7 @@ class SolicitacaoController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ClienteBundle:Solicitacao')->find($id);
-
+        //$disponibilidade3 = $em->getRepository('ClienteBundle:Disponibilidade')->find($entity->getDisponibilidade3()->getId());
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Solicitacao entity.');
         }
@@ -156,9 +159,13 @@ class SolicitacaoController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ClienteBundle:Solicitacao:edit.html.twig', array(
+                    'usuario' => $this->getUser(),
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
+//                    'disponibilidade1' => $disponibilidade1,
+//                    'disponibilidade2' => $disponibilidade2,
+                        //        'disponibilidade3' => $disponibilidade3,
         ));
     }
 
@@ -187,28 +194,66 @@ class SolicitacaoController extends Controller {
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
-
+        $user = $em->getRepository('ClienteBundle:Usuario')->find($this->getUser()->getId());
         $entity = $em->getRepository('ClienteBundle:Solicitacao')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Solicitacao entity.');
         }
+        $disponibilidades = $this->validaDisponibilidade($user, $request);
+        if ($disponibilidades) {
+            $i = 0;
+            foreach ($disponibilidades as $disponibilidade) {
+                switch ($i) {
+                    case 0:
+                        $dispAux1 = $em->getRepository('ClienteBundle:Disponibilidade')->find($entity->getDisponibilidade1()->getId());
+                        $dispAux1->setDia($disponibilidade->getDia());
+                        $dispAux1->setTurno($disponibilidade->getTurno());
+                        break;
+                    case 1:
+                        $dispAux2 = $em->getRepository('ClienteBundle:Disponibilidade')->find($entity->getDisponibilidade2()->getId());
+                        $dispAux2->setDia($disponibilidade->getDia());
+                        $dispAux2->setTurno($disponibilidade->getTurno());
+                        break;
+                    case 2:
+                        $dispAux3 = $em->getRepository('ClienteBundle:Disponibilidade')->find($entity->getDisponibilidade3()->getId());
+                        $dispAux3->setDia($disponibilidade->getDia());
+                        $dispAux3->setTurno($disponibilidade->getTurno());
+                        break;
+                }
+                $i++;
+            }
+            $editForm = $this->createEditForm($entity);
+            $editForm->handleRequest($request);
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+            if ($editForm->isValid()) {
+                $em->flush();
 
-        if ($editForm->isValid()) {
-            $em->flush();
+                return $this->redirect($this->generateUrl('solicitacao_show', array('id' => $id)));
+            }
 
-            return $this->redirect($this->generateUrl('solicitacao_edit', array('id' => $id)));
+            return $this->render('ClienteBundle:Solicitacao:edit.html.twig', array(
+                        'entity' => $entity,
+                        'edit_form' => $editForm->createView(),
+            ));
+        }
+    }
+
+    /**
+     * Cancelar a Solicitacao entity.
+     *
+     */
+    public function cancelarAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ClienteBundle:Solicitacao')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Solicitacao entity.');
         }
 
-        return $this->render('ClienteBundle:Solicitacao:edit.html.twig', array(
-                    'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-        ));
+        $entity->setStatus("Cancelada");
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('solicitacao'));
     }
 
     /**
@@ -250,18 +295,18 @@ class SolicitacaoController extends Controller {
         ;
     }
 
-
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $solicitacao = $em->getRepository('ClienteBundle:Solicitacao')->find($id);
-
-        if (!$solicitacao) {
-            return null;
-        }
-
-        return $solicitacao;
-    }
+//
+//    public function showAction($id) {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $solicitacao = $em->getRepository('ClienteBundle:Solicitacao')->find($id);
+//
+//        if (!$solicitacao) {
+//            return null;
+//        }
+//
+//        return $solicitacao;
+//    }
 
     function validateDate($date, $format = 'Y-m-d H:i:s') {
 
@@ -269,7 +314,10 @@ class SolicitacaoController extends Controller {
         return $d && $d->format($format) == $date;
     }
 
-    function validaDisponibilidade($disp1, $disp2 = null, $disp3 = null, $request) {
+    function validaDisponibilidade($user, $request) {
+        $disp1 = $request->get('disp1');
+        $disp2 = $request->get('disp2');
+        $disp3 = $request->get('disp3');
         $disponibilidade1 = new Disponibilidade ();
         $disponibilidade2 = new Disponibilidade();
         $disponibilidade3 = new Disponibilidade();
@@ -279,58 +327,46 @@ class SolicitacaoController extends Controller {
                     $data1 = \DateTime::createFromFormat("d/m/Y", $disp1);
                     $data2 = \DateTime::createFromFormat("d/m/Y", $disp2);
                     $data3 = \DateTime::createFromFormat("d/m/Y", $disp3);
-                    $dataAtual = new \DateTime;
-                    if ($data1 > $dataAtual and $data2 > $dataAtual and $data3 > $dataAtual) {
-                        $disponibilidade1->setDia($data1);
-                        $disponibilidade1->setTurno($request->get('turno1'));
-                        $disponibilidade2->setDia($data2);
-                        $disponibilidade2->setTurno($request->get('turno2'));
-                        $disponibilidade3->setDia($data3);
-                        $disponibilidade3->setTurno($request->get('turno3'));
-                        return array($disponibilidade1, $disponibilidade2, $disponibilidade3);
-                    } else {
-                        return false;
-                    }
+                    $disponibilidade1->setDia($data1);
+                    $disponibilidade1->setTurno($request->get('turno1'));
+                    $disponibilidade1->setResponsavel($user);
+                    $disponibilidade2->setDia($data2);
+                    $disponibilidade2->setTurno($request->get('turno2'));
+                    $disponibilidade2->setResponsavel($user);
+                    $disponibilidade3->setDia($data3);
+                    $disponibilidade3->setTurno($request->get('turno3'));
+                    $disponibilidade3->setResponsavel($user);
+                    return array($disponibilidade1, $disponibilidade2, $disponibilidade3);
                 } else {
                     $data1 = \DateTime::createFromFormat("d/m/Y", $disp1);
                     $data2 = \DateTime::createFromFormat("d/m/Y", $disp2);
-                    $dataAtual = new \DateTime;
-                    if ($data1 > $dataAtual and $data2 > $dataAtual) {
-                        $disponibilidade1->setDia($data1);
-                        $disponibilidade1->setTurno($request->get('turno1'));
-                        $disponibilidade2->setDia($data2);
-                        $disponibilidade2->setTurno($request->get('turno2'));
-                        return array($disponibilidade1, $disponibilidade2);
-                    } else {
-                        return false;
-                    }
+                    $disponibilidade1->setDia($data1);
+                    $disponibilidade1->setTurno($request->get('turno1'));
+                    $disponibilidade1->setResponsavel($user);
+                    $disponibilidade2->setDia($data2);
+                    $disponibilidade2->setTurno($request->get('turno2'));
+                    $disponibilidade2->setResponsavel($user);
+                    return array($disponibilidade1, $disponibilidade2);
                 }
             } elseif ($this->validateDate($disp3, "d/m/Y")) {
                 $data1 = \DateTime::createFromFormat("d/m/Y", $disp1);
                 $data3 = \DateTime::createFromFormat("d/m/Y", $disp3);
-                $dataAtual = new \DateTime;
-                if ($data1 > $dataAtual and $data3 > $dataAtual) {
-                    $disponibilidade1->setDia($data1);
-                    $disponibilidade1->setTurno($request->get('turno1'));
-                    $disponibilidade3->setDia($data3);
-                    $disponibilidade3->setTurno($request->get('turno3'));
+                $disponibilidade1->setDia($data1);
+                $disponibilidade1->setTurno($request->get('turno1'));
+                $disponibilidade1->setResponsavel($user);
+                $disponibilidade3->setDia($data3);
+                $disponibilidade3->setTurno($request->get('turno3'));
+                $disponibilidade3->setResponsavel($user);
 
-                    return array($disponibilidade1, $disponibilidade3);
-                } else {
-                    return false;
-                }
+                return array($disponibilidade1, $disponibilidade3);
             }
             $data1 = \DateTime::createFromFormat("d/m/Y", $disp1);
-            $dataAtual = \DateTime::createFromFormat("d/m/Y", $disp1);
-            if ($data1 > $dataAtual) {
-                $disponibilidade1->setDia($data1);
-
-                $disponibilidade1->setTurno($request->get('turno1'));
-                return array($disponibilidade1);
-            } else {
-                return false;
-            }
+            $disponibilidade1->setDia($data1);
+            $disponibilidade1->setTurno($request->get('turno1'));
+            $disponibilidade1->setResponsavel($user);
+            return array($disponibilidade1);
         }
+        return false;
     }
 
 }
