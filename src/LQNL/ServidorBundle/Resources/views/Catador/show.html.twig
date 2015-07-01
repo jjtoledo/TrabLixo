@@ -23,7 +23,11 @@
                 </tr>
                 <tr>
                     <th>Data de Nascimento</th>
-                    <td>{{ entity.nascimento|date('d-m-Y') }}</td>
+                    <td>{{ entity.nascimento|date('d/m/Y') }}</td>
+                </tr>
+                <tr>
+                    <th>Endereço</th>
+                    <td>{{ entity.endereco }}</td>
                 </tr>
                 <tr>
                     <th colspan="2">
