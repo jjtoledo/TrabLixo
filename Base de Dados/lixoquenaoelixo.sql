@@ -92,7 +92,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `lixoquenaoelixo`.`recolhimento` (
   `id` BIGINT(20) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
-  `data` DATE NOT NULL ,
+  `data` DATETIME NOT NULL ,
   `papel` FLOAT NOT NULL ,
   `metal` FLOAT NOT NULL ,
   `eletronico` FLOAT NOT NULL ,

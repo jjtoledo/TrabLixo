@@ -193,7 +193,6 @@ class UsuarioController extends Controller {
             throw $this->createNotFoundException('Unable to find Usuario entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
@@ -203,6 +202,14 @@ class UsuarioController extends Controller {
         $entity->setPassword($encodedPass);
 
         if ($editForm->isValid()) {
+            $endereco = $em->getRepository('AutenticacaoBundle:Endereco')->find($entity->getEndereco()->getId());
+            $endereco->setCep($request->get('cep'));
+            $endereco->setRua($request->get('rua'));
+            $endereco->setNumero($request->get('numero'));
+            $endereco->setBairro($request->get('bairro'));
+            $endereco->setCidade($request->get('cidade'));
+            $endereco->setUf($request->get('uf'));
+            $endereco->setComplemento($request->get('complemento'));
             $em->flush();
 
             return $this->redirect($this->generateUrl('usuarios_show', array('id' => $id)));
@@ -304,13 +311,12 @@ class UsuarioController extends Controller {
                     ->setFrom('testeletiva@gmail.com', 'LQNL - Recuperar Senha')
                     ->setTo($request->get('_username'))
                     ->setBody($this->renderView('::emailTemplate.html.twig', array(
+                        'titulo' => 'Recuperar Senha',
                         'mensagem' => 'Nova senha: ' . $novaSenha,
                     )), 'text/html');
             $this->get('mailer')->send($messageCliente);
 
-            return $this->render('AutenticacaoBundle:Usuario:recuperarSenha.html.twig', array(
-                        'error' => 'Uma nova senha foi enviada para seu e-mail, verifique sua caixa de entrada em alguns instantes!'
-            ));
+            return $this->redirect($this->generateUrl('mensagem', array('tipoMensagem' => 1)));
         }
         return $this->render('AutenticacaoBundle:Usuario:recuperarSenha.html.twig', array(
                     'error' => 'E-mail não cadastrado no sistema, tente novamente!'

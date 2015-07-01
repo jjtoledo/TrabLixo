@@ -4,7 +4,6 @@ namespace LQNL\ServidorBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use LQNL\ServidorBundle\Entity\Recolhimento;
 use LQNL\ServidorBundle\Form\RecolhimentoType;
 
@@ -12,32 +11,66 @@ use LQNL\ServidorBundle\Form\RecolhimentoType;
  * Recolhimento controller.
  *
  */
-class RecolhimentoController extends Controller
-{
+class RecolhimentoController extends Controller {
 
     /**
      * Lists all Recolhimento entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ServidorBundle:Recolhimento')->findAll();
 
         return $this->render('ServidorBundle:Recolhimento:index.html.twig', array(
-            'entities' => $entities,
+                    'usuario' => $this->getUser(),
+                    'entities' => $entities,
         ));
     }
+
+    /**
+     * Lists all Recolhimento entities.
+     *
+     */
+    public function recolhidosHojeAction() {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('ServidorBundle:Recolhimento')->findAll();
+        $recolhidosHoje = "";
+        foreach ($entities as $recolhimento) {
+            if ($recolhimento->getData()->format('d/m/Y') == (new \DateTime)->format('d/m/Y'))
+                $recolhidosHoje[] = $recolhimento;
+        }
+
+        return $this->render('ServidorBundle:Recolhimento:hoje.html.twig', array(
+                    'data' => new \DateTime,
+                    'usuario' => $this->getUser(),
+                    'entities' => $recolhidosHoje,
+        ));
+    }
+
     /**
      * Creates a new Recolhimento entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new Recolhimento();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        if ($entity->getEletronico() == 0)
+            $entity->setEletronico(0);
+        if ($entity->getMetal() == 0)
+            $entity->setMetal(0);
+        if ($entity->getOutros() == 0)
+            $entity->setOutros(0);
+        if ($entity->getPapel() == 0)
+            $entity->setPapel(0);
+        if ($entity->getPlastico() == 0)
+            $entity->setPlastico(0);
+        if ($entity->getVidro() == 0)
+            $entity->setVidro(0);
+        $entity->setTotal($entity->getMetal() + $entity->getEletronico() + $entity->getOutros() + $entity->getPapel() + $entity->getPlastico() + $entity->getVidro());
+        $entity->setData(new \DateTime);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -48,8 +81,8 @@ class RecolhimentoController extends Controller
         }
 
         return $this->render('ServidorBundle:Recolhimento:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -60,8 +93,7 @@ class RecolhimentoController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Recolhimento $entity)
-    {
+    private function createCreateForm(Recolhimento $entity) {
         $form = $this->createForm(new RecolhimentoType(), $entity, array(
             'action' => $this->generateUrl('recolhimentos_create'),
             'method' => 'POST',
@@ -76,14 +108,14 @@ class RecolhimentoController extends Controller
      * Displays a form to create a new Recolhimento entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Recolhimento();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('ServidorBundle:Recolhimento:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'usuario' => $this->getUser(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -91,8 +123,7 @@ class RecolhimentoController extends Controller
      * Finds and displays a Recolhimento entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ServidorBundle:Recolhimento')->find($id);
@@ -104,8 +135,9 @@ class RecolhimentoController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ServidorBundle:Recolhimento:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'usuario' => $this->getUser(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -113,8 +145,7 @@ class RecolhimentoController extends Controller
      * Displays a form to edit an existing Recolhimento entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ServidorBundle:Recolhimento')->find($id);
@@ -127,21 +158,20 @@ class RecolhimentoController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ServidorBundle:Recolhimento:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a Recolhimento entity.
-    *
-    * @param Recolhimento $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Recolhimento $entity)
-    {
+     * Creates a form to edit a Recolhimento entity.
+     *
+     * @param Recolhimento $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Recolhimento $entity) {
         $form = $this->createForm(new RecolhimentoType(), $entity, array(
             'action' => $this->generateUrl('recolhimentos_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -151,12 +181,12 @@ class RecolhimentoController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Recolhimento entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ServidorBundle:Recolhimento')->find($id);
@@ -176,17 +206,17 @@ class RecolhimentoController extends Controller
         }
 
         return $this->render('ServidorBundle:Recolhimento:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a Recolhimento entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -212,13 +242,13 @@ class RecolhimentoController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('recolhimentos_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('recolhimentos_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }

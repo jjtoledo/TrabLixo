@@ -12,48 +12,48 @@ LQNL\ServidorBundle\Entity\Recolhimento:
                 strategy: IDENTITY
     fields:
         data:
-            type: date
+            type: datetime
             nullable: false
             comment: ''
         papel:
             type: float
-            nullable: false
+            nullable: true
             precision: 10
             scale: 0
             comment: ''
         metal:
             type: float
-            nullable: false
+            nullable: true
             precision: 10
             scale: 0
             comment: ''
         eletronico:
             type: float
-            nullable: false
+            nullable: true
             precision: 10
             scale: 0
             comment: ''
         vidro:
             type: float
-            nullable: false
+            nullable: true
             precision: 10
             scale: 0
             comment: ''
         plastico:
             type: float
-            nullable: false
+            nullable: true
             precision: 10
             scale: 0
             comment: ''
         outros:
             type: float
-            nullable: false
+            nullable: true
             precision: 10
             scale: 0
             comment: ''
         total:
             type: float
-            nullable: false
+            nullable: true
             precision: 10
             scale: 0
             comment: ''

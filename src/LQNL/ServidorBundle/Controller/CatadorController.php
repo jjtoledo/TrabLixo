@@ -5,6 +5,7 @@ namespace LQNL\ServidorBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use LQNL\ServidorBundle\Entity\Catador;
+use LQNL\ServidorBundle\Entity\Endereco;
 use LQNL\ServidorBundle\Form\CatadorType;
 
 /**
@@ -37,15 +38,34 @@ class CatadorController extends Controller {
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
+        $em = $this->getDoctrine()->getManager();
+
+        $endereco = new Endereco();
+        $endereco->setCep($request->get('cep'));
+        $endereco->setRua($request->get('rua'));
+        $endereco->setNumero($request->get('numero'));
+        $endereco->setBairro($request->get('bairro'));
+        $endereco->setCidade($request->get('cidade'));
+        $endereco->setUf($request->get('uf'));
+        $endereco->setComplemento($request->get('complemento'));
+
+
+        $em->persist($endereco);
+        $em->flush();
+
+        $novoEndereco = $em->getRepository('ServidorBundle:Endereco')->findOneBy(array('cep' => $endereco->getCep(), 'rua' => $endereco->getRua(), 'bairro' => $endereco->getBairro(), 'cidade' => $endereco->getCidade(), 'uf' => $endereco->getUf(), 'complemento' => $endereco->getComplemento()));
+        $entity->setEndereco($novoEndereco);
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('catadores_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('catadores'));
         }
 
         return $this->render('ServidorBundle:Catador:new.html.twig', array(
+                    'usuario' => $this->getUser(),
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
@@ -100,6 +120,7 @@ class CatadorController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ServidorBundle:Catador:show.html.twig', array(
+                    'usuario' => $this->getUser(),
                     'entity' => $entity,
                     'delete_form' => $deleteForm->createView(),
         ));
@@ -113,6 +134,7 @@ class CatadorController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ServidorBundle:Catador')->find($id);
+        $endereco = $em->getRepository('ServidorBundle:Endereco')->find($entity->getEndereco()->getId());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Catador entity.');
@@ -122,6 +144,8 @@ class CatadorController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ServidorBundle:Catador:edit.html.twig', array(
+                    'endereco' => $endereco,
+                    'usuario' => $this->getUser(),
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -164,12 +188,22 @@ class CatadorController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $endereco = $em->getRepository('ServidorBundle:Endereco')->find($entity->getEndereco()->getId());
+            $endereco->setCep($request->get('cep'));
+            $endereco->setRua($request->get('rua'));
+            $endereco->setNumero($request->get('numero'));
+            $endereco->setBairro($request->get('bairro'));
+            $endereco->setCidade($request->get('cidade'));
+            $endereco->setUf($request->get('uf'));
+            $endereco->setComplemento($request->get('complemento'));
             $em->flush();
 
-            return $this->redirect($this->generateUrl('catadores_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('catadores_show', array('id' => $id)));
         }
 
         return $this->render('ServidorBundle:Catador:edit.html.twig', array(
+                    'endereco' => $endereco,
+                    'usuario' => $this->getUser(),
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),

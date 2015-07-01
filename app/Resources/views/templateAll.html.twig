@@ -19,57 +19,57 @@
 
     <body>
 
-        {% block barraNavegacao %}
-            <!-- Barra de Navegação -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <div class="container">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="{{path('login')}}">LQNL</a>
+        <div class="navbar">
+            {% block barraNavegacao %}
+                <!-- Barra de Navegação -->
+                <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                    <div class="container">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="{{path('login')}}"><i class="glyphicon glyphicon-home"></i> LQNL</a>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="navbar-default">
+                            <ul class="nav navbar-nav">          
+                                <li><a href="#"><i class="glyphicon glyphicon-list"></i> Informações</a></li>
+                                <li><a href="{{path('faleconosco')}}"><i class="glyphicon glyphicon-envelope"></i> Fale Conosco</a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    {#                                <label class="lead">          #}
+                                    <a href="{{ path('usuarios_show', { 'id': usuario.id }) }}"><i class="glyphicon glyphicon-user"></i> {{usuario.nome}}</a>
+                                    {#                                </label>#}
+                                </li>
+                                {#<li>
+                                    <a>{{data|date('d/M') }}</a>
+                                </li>#}
+                                <li>
+                                    <a href="{{path('logout')}}"><i class="glyphicon glyphicon-log-out"></i> Sair</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
                     </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="navbar-default">
-                        <ul class="nav navbar-nav">          
-                            <li><a href="#">Informações</a></li>
-                            <li><a href="#">Contato</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                {#                                <label class="lead">          #}
-                                <a href="{{ path('usuarios_show', { 'id': usuario.id }) }}">{{usuario.nome}}</a>
-                                {#                                </label>#}
-                            </li>
-                            {#<li>
-                                <a>{{data|date('d/M') }}</a>
-                            </li>#}
-                            <li>
-                                <a href="{{path('logout')}}"><i class="glyphicon glyphicon-log-out"></i> Sair</a>
-                            </li>
-                        </ul>
-                    </div>
-
-
-                </div>
-            </nav><!-- /.navbar-collapse -->
-        {% endblock %}
+                </nav><!-- /.navbar-collapse -->
+            {% endblock %}
+        </div>
 
 
 
 
         <div class="container">
-            <br/><br/><br/><br />
             <div class="col-lg-12">
-                {#                <br/><br/><br/><br/>#}
             </div>
             {% block menu %}
                 <div class="col-md-3">
                     <p class="lead">Menu</p>
                     <div class="list-group">
-                        <a class="list-group-item" href="{{path('home')}}">Início</a>
-                        <a href="{{ path('usuarios_show', { 'id': usuario.id }) }}" class="list-group-item">Meu Perfil</a>
-                        <a href="{{ path('solicitacao_new', { 'id': usuario.id }) }}" class="list-group-item">Gerar Solicitacao</a>
-                        <a href="{{ path('solicitacao')}}" class="list-group-item">Solicitacões</a>
+                        <a class="list-group-item" href="{{path('home')}}"><i class="glyphicon glyphicon-home"></i> Início</a>
+                        <a href="{{ path('usuarios_show', { 'id': usuario.id }) }}" class="list-group-item"><i class="glyphicon glyphicon-user"></i> Meu Perfil</a>
+                        <a href="{{ path('solicitacao_new', { 'id': usuario.id }) }}" class="list-group-item"><i class="glyphicon glyphicon-plus-sign"></i> Gerar Solicitacao</a>
+                        <a href="{{ path('solicitacao')}}" class="list-group-item"><i class="glyphicon glyphicon-list-alt"></i> Solicitacões</a>
                     </div>
                 </div>
             {% endblock %}

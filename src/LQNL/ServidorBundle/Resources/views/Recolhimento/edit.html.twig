@@ -1,16 +1,82 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Recolhimento edit</h1>
-
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('recolhimentos') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% extends '::templateAllAdmin.html.twig' %}
+{% block container %}
+    <div class='col-lg-9'>
+        <br/>
+        <br/>
+        <br/>
+        {#{{ form(form) }}#}
+        {{form_start(form, { 'attr': {'class':'form-horizontal well'} })}}
+        <fieldset>
+            <legend>Cadastro de Recolhimento</legend>
+            <div class="col-lg-12">
+                <label class="control-label" for="input01">Indique a quantidade <u>em Kg</u> de cada tipo de lixo recolhido: </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="control-label" for="input01">Papel: </label>
+                <div class="controls">
+                    {{form_widget(form.papel)}}
+                    {{form_errors(form.papel)}}
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <label class="control-label" for="input01">Metal: </label>
+                <div class="controls">
+                    {{form_widget(form.metal)}}
+                    {{form_errors(form.metal)}}
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <label class="control-label" for="input01">Eletrônico: </label>
+                <div class="controls">
+                    {{form_widget(form.eletronico)}}
+                    {{form_errors(form.eletronico)}}
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <label class="control-label" for="input01">Vidro: </label>
+                <div class="controls">
+                    {{form_widget(form.vidro)}}
+                    {{form_errors(form.vidro)}}
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <label class="control-label" for="input01">Plástico: </label>
+                <div class="controls">
+                    {{form_widget(form.plastico)}}
+                    {{form_errors(form.plastico)}}
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <label class="control-label" for="input01">Outros: </label>
+                <div class="controls">
+                    {{form_widget(form.outros)}}
+                    {{form_errors(form.outros)}}
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <br/>
+                <div class="form-actions">
+                    {{ form_widget(form.submit, { 'attr' : {'class': 'btn btn-primary'}, 'label': 'Enviar' }) }}
+                    <button type="reset" class="btn btn-warning">Limpar</button>
+                </div>
+            </div>
+        </fieldset>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
+
+{% block scriptsextra %}
+    <script type="text/javascript">
+        function SomenteNumero(e) {
+            var tecla = (window.event) ? event.keyCode : e.which;
+            if ((tecla > 47 && tecla < 58))
+                return true;
+            else {
+                if (tecla == 8 || tecla == 0 || tecla == 44)
+                    return true;
+                else
+                    return false;
+            }
+        }
+    </script>
+{%endblock%}

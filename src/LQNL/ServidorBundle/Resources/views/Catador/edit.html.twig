@@ -1,16 +1,163 @@
-{% extends '::base.html.twig' %}
+{% extends '::templateAllAdmin.html.twig' %}
 
-{% block body -%}
-    <h1>Catador edit</h1>
+{% block stylessheetsextra %}
+    {#    <link href="{{asset('bundles/aut/css/bootstrap-select.css')}}" rel="stylesheet" type="text/css">#}
+    <link href="{{asset('bundles/autenticacao/css/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css">
+{%endblock%}
 
-    {{ form(edit_form) }}
+{% block container %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('catadores') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="col-lg-9">
+        {{form_start(edit_form, { 'attr': {'class':'form-horizontal well'} })}}
+        <fieldset>
+            <legend>Cadastro de Catador</legend>
+            <div class="col-lg-8">
+                <label class="control-label" for="input01">Nome completo: </label>
+                <div class="controls">
+                    {{form_widget(edit_form.nome)}}
+                    {{form_errors(edit_form.nome)}}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <label class="control-label" for="input03">Telefone: </label>
+                <div class="controls">
+                    {{form_widget(edit_form.telefone, {'attr':{'placeholder':'(99)9999-9999', 'onkeypress':'mascaratel(this);'} }) }}
+                    {{form_errors(edit_form.telefone)}}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="control-label" >E-mail:</label>
+                <div class="controls">
+                    {{ form_widget(edit_form.email, {'attr':{'placeholder':'exemplo@email.com'} }) }}
+                    {{ form_errors(edit_form.email) }}
+                    <p class="help-block">E-mail para login no sistema</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="controls">
+                    <div class="col-lg-3">
+                        <label class="control-label" for="select02">Dia:</label>
+                        <div class="controls">
+                            {{ form_widget(edit_form.nascimento.day, {'attr':{'class' : 'form-control selectpicker', "data-live-search" : "true",} }) }}
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="control-label" for="select02">Mês:</label>
+                        <div class="controls">
+                            {{ form_widget(edit_form.nascimento.month, {'attr':{'class' : 'form-control selectpicker', "data-live-search" : "true",} }) }}
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <label class="control-label" for="select02">Ano:</label>
+                        <div class="controls">
+                            {{ form_widget(edit_form.nascimento.year, {'attr':{'class' : 'form-control selectpicker', "data-live-search" : "true",} }) }}
+                        </div>
+                    </div>
+                    {#{{ form_widget(edit_form.nascimento.month, {'attr':{'class' : 'form-control'} }) }}
+                    {{ form_widget(edit_form.nascimento.year, {'attr':{'class' : 'form-control'} }) }}#}
+                    <div class="col-lg-12">
+                        {{ form_errors(edit_form.nascimento) }}
+                        <p class="help-block">Data de nascimento do catador</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <label class="control-label" for="descricao">Endereço</label>                
+            </div>
+
+            <div class="col-lg-3">
+                <label class="control-label" >CEP:</label>
+                <div class="controls">
+                    <input type="text" id="cep" name="cep" class="form-control" required="required" maxlength="9" onkeypress="mascaracep(this);" value="{{endereco.cep}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <label class="control-label" >Rua:</label>
+                <div class="controls">
+                    <input type="text" id="rua" name="rua" class="form-control" required="required" value="{{endereco.rua}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <label class="control-label" >Número:</label>
+                <div class="controls">
+                    <input type="number" id="numero" name="numero" class="form-control" required="required" value="{{endereco.numero}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <label class="control-label" >Bairro:</label>
+                <div class="controls">
+                    <input type="text" id="bairro" name="bairro" class="form-control" required="required" value="{{endereco.bairro}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <label class="control-label" >Cidade:</label>
+                <div class="controls">
+                    <input type="text" id="cidade" name="cidade" class="form-control" required="required" value="{{endereco.cidade}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <label class="control-label" >UF:</label>
+                <div class="controls">
+                    <input type="text" id="uf" name="uf" class="form-control" required="required" value="{{endereco.uf}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <label class="control-label" >Complemento:</label>
+                <div class="controls">
+                    <input type="text" id="complemento" name="complemento" class="form-control" value="{{endereco.complemento}}"/>
+                </div>
+            </div>
+
+
+            <hr>
+
+            <div class="col-lg-12">
+                <br/>
+                <div class="form-actions">
+                    {{ form_widget(edit_form.submit, { 'attr' : {'class': 'btn btn-primary'}, 'label': 'Salvar' }) }}
+                    <a  href="{{path('catadores_show', {'id' : entity.id })}}" class="btn btn-warning">Cancelar</a>
+                    {#                        <button type="reset" class="btn btn-info" href="{{path('home')}}">Cancelar</button>#}
+                </div>
+            </div>
+            {#{{ form_widget(edit_form.chamadaNivel, { 'attr':{'style':'display: none;' } }) }}
+            {{ form_widget(edit_form.descricaoSolucao, { 'attr':{'style':'display: none;' } }) }}
+            {{ form_widget(edit_form.chamadaStatus, { 'attr':{'style':'display: none;'} }) }}#}
+        </fieldset>
+        {{ form_end(edit_form) }}
+    </div>
+
+    <script type="text/javascript">
+        function mascaratel(telefone) {
+            telefone.value = telefone.value.replace(/\D/g, "");             //Remove tudo o que não é dígito
+            telefone.value = telefone.value.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+            telefone.value = telefone.value.replace(/(\d)(\d{4})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+        }
+
+        function mascaracep(cep) {
+            cep.value = cep.value.replace(/\D/g, "");             //Remove tudo o que não é dígito
+            cep.value = cep.value.replace(/(\d)(\d{2})$/, "$1-$2");
+        }
+    </script>
+
 {% endblock %}
+
+
+{% block scriptsextra %}
+    {#    <script src="{{asset('bundles/aut/js/bootstrap-select.js')}}" type="text/javascript"></script>#}
+    <script src="{{asset('bundles/autenticacao/js/bootstrap-select.min.js')}}" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(".selectpicker").selectpicker({
+            size: 5,
+            noneResultsText: "Nenhum resultado encontrado!"
+        });
+    </script>
+
+{%endblock%}

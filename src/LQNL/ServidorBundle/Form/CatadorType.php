@@ -16,7 +16,7 @@ class CatadorType extends AbstractType {
         $builder
                 ->add('nome', null, array('attr' => array('class' => 'form-control')))
                 ->add('email', null, array('attr' => array('class' => 'form-control')))
-                ->add('telefone', "email", array('attr' => array('class' => 'form-control')))
+                ->add('telefone', null, array('attr' => array('class' => 'form-control', 'maxlength'=>'15')))
                 ->add('nascimento', 'text', array('attr' => array('class' => 'form-control')))
                 ->add('nascimento', 'date', array(
                     'years' => range(date('Y') - 70, date('Y') - 14),

@@ -7,7 +7,7 @@
     <div class="col-lg-9">
         <h1>Solicitações</h1>
         <a class="btn btn-primary" href="{{ path('solicitacao_new') }}">
-            Nova Solicitação
+            <i class="glyphicon glyphicon-plus-sign"></i> Nova Solicitação
         </a>
         <table id="tabela" class="table table-hover table-responsive">
             <thead>
@@ -49,9 +49,9 @@
                             <div class="dropdown">
                                 <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Opções <i class="glyphicon glyphicon-collapse-down"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="alert-info" href="{{ path('solicitacao_show', { 'id': entity.id }) }}">Visualizar</a></li>
+                                    <li><a class="alert-info" href="{{ path('solicitacao_show', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-eye-open"></i> Visualizar</a></li>
                                         {% if entity.status == "Em Aberto" %}
-                                        <li><a class="alert-warning" href="{{ path('solicitacao_edit', { 'id': entity.id }) }}">Editar</a></li>
+                                        <li><a class="alert-warning" href="{{ path('solicitacao_edit', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-pencil"></i> Editar</a></li>
                                         {% endif %}
                                 </ul>
                             </div>

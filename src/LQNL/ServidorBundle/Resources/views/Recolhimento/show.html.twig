@@ -1,60 +1,48 @@
-{% extends '::base.html.twig' %}
+{% extends '::templateAllAdmin.html.twig' %}
 
-{% block body -%}
-    <h1>Recolhimento</h1>
+{% block container %}
+    <div class="col-lg-9" >
+        <h3>
+            <a class="btn btn-primary" href="{{ path('recolhimentos') }}">
+                <i class="glyphicon glyphicon-arrow-left"></i> Voltar
+            </a> 
+            Recolhimento ID: {{ entity.id | number_format}}
+        </h3>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Data</th>
-                <td>{{ entity.data|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Papel</th>
-                <td>{{ entity.papel }}</td>
-            </tr>
-            <tr>
-                <th>Metal</th>
-                <td>{{ entity.metal }}</td>
-            </tr>
-            <tr>
-                <th>Eletronico</th>
-                <td>{{ entity.eletronico }}</td>
-            </tr>
-            <tr>
-                <th>Vidro</th>
-                <td>{{ entity.vidro }}</td>
-            </tr>
-            <tr>
-                <th>Plastico</th>
-                <td>{{ entity.plastico }}</td>
-            </tr>
-            <tr>
-                <th>Outros</th>
-                <td>{{ entity.outros }}</td>
-            </tr>
-            <tr>
-                <th>Total</th>
-                <td>{{ entity.total }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('recolhimentos') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('recolhimentos_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+        <table class="table table-responsive table-hover">
+            <tbody>
+                <tr>
+                    <th width="30%" colspan="1">Data / Horário</th>
+                    <td colspan="3">{{ entity.data|date('d/m/Y H:i:s') }}</td>
+                </tr>
+                <tr style="background-color: #66afe9"><td colspan="4"></td></tr>
+                <tr>
+                    <th colspan="4">Quantidade Recolhida (Kg):</th>
+                </tr>
+                <tr>
+                    <th>Papel</th>
+                    <td>{{ entity.papel }}</td>
+                    <th>Metal</th>
+                    <td>{{ entity.metal }}</td>
+                </tr>
+                <tr>
+                    <th>Eletronico</th>
+                    <td>{{ entity.eletronico }}</td>
+                    <th>Vidro</th>
+                    <td>{{ entity.vidro }}</td>
+                </tr>
+                <tr>
+                    <th>Plastico</th>
+                    <td>{{ entity.plastico }}</td>
+                    <th>Outros</th>
+                    <td>{{ entity.outros }}</td>
+                </tr>
+                <tr style="background-color: #66afe9"><td colspan="4"></td></tr>
+                <tr>
+                    <th colspan="1">Total</th>
+                    <td colspan="3">{{ entity.total }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

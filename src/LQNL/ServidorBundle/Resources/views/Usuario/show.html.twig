@@ -24,8 +24,8 @@
                 </tr>
             </tbody>
         </table>
-        <a class="lead btn btn-warning" href="{{ path('usuarios_edit', { 'id': usuario.id }) }}">Editar</a>
-        <a type="button" class="lead btn btn-danger" data-toggle="modal" data-target="#exampleModal">Deletar Usuario</a>
+        <a class="lead btn btn-warning" href="{{ path('administradores_edit', { 'id': usuario.id }) }}"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
+        <a type="button" class="lead btn btn-danger" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-trash"></i> Deletar Usuario</a>
         {#        <a class="lead btn btn-danger" href="{{ path('usuarios_delete', { 'id': usuario.id }) }}">Deletar</a>#}
 
     </div>

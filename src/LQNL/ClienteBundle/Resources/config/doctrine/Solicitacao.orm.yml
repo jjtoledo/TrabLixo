@@ -39,32 +39,32 @@ LQNL\ClienteBundle\Entity\Solicitacao:
             comment: ''
         papel:
             type: integer
-            nullable: false
+            nullable: true
             unsigned: false
             comment: ''
         metal:
             type: integer
-            nullable: false
+            nullable: true
             unsigned: false
             comment: ''
         eletronico:
             type: integer
-            nullable: false
+            nullable: true
             unsigned: false
             comment: ''
         vidro:
             type: integer
-            nullable: false
+            nullable: true
             unsigned: false
             comment: ''
         plastico:
             type: integer
-            nullable: false
+            nullable: true
             unsigned: false
             comment: ''
         outros:
             type: integer
-            nullable: false
+            nullable: true
             unsigned: false
             comment: ''
         status:

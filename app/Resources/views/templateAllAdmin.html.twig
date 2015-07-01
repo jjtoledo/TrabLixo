@@ -25,19 +25,19 @@
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="{{path('login')}}">LQNL</a>
+                        <a class="navbar-brand" href="{{path('login')}}"><i class="glyphicon glyphicon-home"></i> LQNL</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="navbar-default">
                         <ul class="nav navbar-nav">          
-                            <li><a href="#">Informações</a></li>
-                            <li><a href="#">Contato</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-list"></i> Informações</a></li>
+                            <li><a href="{{path('faleconosco')}}"><i class="glyphicon glyphicon-envelope"></i> Fale Conosco</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 {#                                <label class="lead">          #}
-                                <a href="{{ path('administradores_show', { 'id': usuario.id }) }}">{{usuario.nome}}</a>
+                                <a href="{{ path('administradores_show', { 'id': usuario.id }) }}"><i class="glyphicon glyphicon-user"></i> {{usuario.nome}}</a>
                                 {#                                </label>#}
                             </li>
                             {#<li>
@@ -66,9 +66,9 @@
                 <div class="col-md-3">
                     <p class="lead">Menu</p>
                     <div class="list-group">
-                        <a class="list-group-item" href="{{path('home')}}">Início</a>
-                        <a href="{{ path('administradores_show', { 'id': usuario.id }) }}" class="list-group-item">Meu Perfil</a>
-                        <a type="button" class="list-group-item" href="javascript:void(0);" onclick="return trocar(subMenuSlocitacoes);">Solicitacões <i class="glyphicon glyphicon-collapse-down"></i></a>
+                        <a class="list-group-item" href="{{path('home')}}"><i class="glyphicon glyphicon-home"></i> Início</a>
+                        <a href="{{ path('administradores_show', { 'id': usuario.id }) }}" class="list-group-item"><i class="glyphicon glyphicon-user"></i> Meu Perfil</a>
+                        <a type="button" class="list-group-item" href="javascript:void(0);" onclick="return trocar(subMenuSlocitacoes);"><i class="glyphicon glyphicon-list-alt"></i> Solicitacões <i class="glyphicon glyphicon-collapse-down"></i></a>
                         <div id="subMenuSlocitacoes" class="list-group" style="display: none;">
                             <a href="{{path('solicitacoes_pedentes')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Pendentes</span></a>
                             <a href="{{path('solicitacoes_em_atendimento')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Em Atendimento</span></a>
@@ -76,15 +76,15 @@
                             <a href="{{path('solicitacoes_canceladas')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Canceladas</span></a>
                             <a href="{{path('solicitacoes')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Todas</span></a>
                         </div>
-                        <a type="button" class="list-group-item" href="javascript:void(0);" onclick="return trocar(subMenuRecolhimentos);">Recolhimentos <i class="glyphicon glyphicon-collapse-down"></i></a>
+                        <a type="button" class="list-group-item" href="javascript:void(0);" onclick="return trocar(subMenuRecolhimentos);"><i class="glyphicon glyphicon-tags"></i> Recolhimentos <i class="glyphicon glyphicon-collapse-down"></i></a>
                         <div id="subMenuRecolhimentos" class="list-group" style="display: none;">
-                            <a href="#" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Cadastrar Novo</span></a>
-                            <a href="#" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Recolhidos Hoje</span></a>
-                            <a href="#" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Todos</span></a>
+                            <a href="{{path('recolhimentos_new')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Cadastrar Novo</span></a>
+                            <a href="{{path('recolhimentos_de_hoje')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Recolhidos Hoje</span></a>
+                            <a href="{{path('recolhimentos')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Todos</span></a>
                         </div>
-                        <a href="{{path('catadores')}}" class="list-group-item">Catadores</a>
-                        <a href="{{path('administradores')}}" class="list-group-item">Administradores</a>
-                        <a href="#" class="list-group-item">Relatórios</a>
+                        <a href="{{path('catadores')}}" class="list-group-item"><i class="glyphicon glyphicon-list"></i> Catadores</a>
+                        <a href="{{path('administradores')}}" class="list-group-item"><i class="glyphicon glyphicon-cog"></i> Administradores</a>
+                        <a href="#" class="list-group-item"><i class="glyphicon glyphicon-align-justify"></i> Relatórios</a>
                     </div>
                 </div>
             {% endblock %}

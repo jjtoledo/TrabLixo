@@ -1,16 +1,128 @@
-{% extends '::base.html.twig' %}
+{% extends '::templateAllAdmin.html.twig' %}
 
-{% block body -%}
-    <h1>Usuario edit</h1>
+{% block container %}
 
-    {{ form(edit_form) }}
+    <div class="col-lg-9">
+        {{form_start(edit_form, { 'attr': {'class':'form-horizontal well'} })}}
+        <fieldset>
+            <legend>Editar Usuário</legend>
+            <div class="col-lg-8">
+                <label class="control-label" for="input01">Nome completo: </label>
+                <div class="controls">
+                    {{form_widget(edit_form.nome)}}
+                    {{form_errors(edit_form.nome)}}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <label class="control-label" for="input03">Telefone: </label>
+                <div class="controls">
+                    {{form_widget(edit_form.telefone, {'attr':{'placeholder':'(99)9999-9999', 'onkeypress':'mascaratel(this);'} }) }}
+                    {{form_errors(edit_form.telefone)}}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="control-label" >E-mail:</label>
+                <div class="controls">
+                    {{ form_widget(edit_form.username, {'attr':{'placeholder':'exemplo@email.com'} }) }}
+                    {{ form_errors(edit_form.username) }}
+                    <p class="help-block">E-mail para login no sistema</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="control-label" for="select02">Senha:</label>
+                <div class="controls">
+                    {{ form_widget(edit_form.password) }}
+                    {{ form_errors(edit_form.password) }}
+                    <p class="help-block">Senha para login no sistema</p>
+                </div>
+            </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('administradores') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+            <div class="col-lg-12">
+                <label class="control-label" for="descricao">Endereço</label>                
+            </div>
+
+            <div class="col-lg-3">
+                <label class="control-label" >CEP:</label>
+                <div class="controls">
+                    <input type="text" id="cep" name="cep" class="form-control" required="required" maxlength="9" onkeypress="mascaracep(this);" value="{{endereco.cep}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <label class="control-label" >Rua:</label>
+                <div class="controls">
+                    <input type="text" id="rua" name="rua" class="form-control" required="required" value="{{endereco.rua}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <label class="control-label" >Número:</label>
+                <div class="controls">
+                    <input type="number" id="numero" name="numero" class="form-control" required="required" value="{{endereco.numero}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <label class="control-label" >Bairro:</label>
+                <div class="controls">
+                    <input type="text" id="bairro" name="bairro" class="form-control" required="required" value="{{endereco.bairro}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <label class="control-label" >Cidade:</label>
+                <div class="controls">
+                    <input type="text" id="cidade" name="cidade" class="form-control" required="required" value="{{endereco.cidade}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <label class="control-label" >UF:</label>
+                <div class="controls">
+                    <input type="text" id="uf" name="uf" class="form-control" required="required" value="{{endereco.uf}}"/>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <label class="control-label" >Complemento:</label>
+                <div class="controls">
+                    <input type="text" id="complemento" name="complemento" class="form-control" value="{{endereco.complemento}}"/>
+                </div>
+            </div>
+
+
+            <hr>
+
+            <div class="col-lg-12">
+                <br/>
+                <div class="form-actions">
+                    {{ form_widget(edit_form.submit, { 'attr' : {'class': 'btn btn-primary'}, 'label': 'Salvar' }) }}
+                    <a href="{{ path('administradores_show', { 'id': usuario.id }) }}" class="btn btn-warning">Cancelar</a>
+                    {#                    <a class="lead btn btn-danger" href="{{ path('usuarios_delete', { 'id': usuario.id }) }}">Deletar Usuario</a>#}
+{#                    <a class="lead btn btn-danger">{{form(delete_form)}}</a>#}
+                    {#                        <button type="reset" class="btn btn-info" href="{{path('home')}}">Cancelar</button>#}
+                    {#{{form(delete_form)}}#}
+                </div>
+            </div>
+            {#{{ form_widget(edit_form.chamadaNivel, { 'attr':{'style':'display: none;' } }) }}
+            {{ form_widget(edit_form.descricaoSolucao, { 'attr':{'style':'display: none;' } }) }}
+            {{ form_widget(edit_form.chamadaStatus, { 'attr':{'style':'display: none;'} }) }}#}
+
+        </fieldset>
+        {{ form_end(edit_form) }}
+    </div>
+
+    <script type="text/javascript">
+        function mascaratel(telefone) {
+            telefone.value = telefone.value.replace(/\D/g, "");             //Remove tudo o que não é dígito
+            telefone.value = telefone.value.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+            telefone.value = telefone.value.replace(/(\d)(\d{4})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+        }
+
+        function mascaracep(telefone) {
+            telefone.value = telefone.value.replace(/\D/g, "");             //Remove tudo o que não é dígito
+            telefone.value = telefone.value.replace(/(\d)(\d{3})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+        }
+    </script>
+
 {% endblock %}

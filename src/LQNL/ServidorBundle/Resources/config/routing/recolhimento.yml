@@ -2,6 +2,10 @@ recolhimentos:
     path:     /
     defaults: { _controller: "ServidorBundle:Recolhimento:index" }
 
+recolhimentos_de_hoje:
+    path:     /recolhidosHoje
+    defaults: { _controller: "ServidorBundle:Recolhimento:recolhidosHoje" }
+
 recolhimentos_show:
     path:     /{id}/show
     defaults: { _controller: "ServidorBundle:Recolhimento:show" }

@@ -37,3 +37,15 @@ recuperar_senha:
 recuperando_senha:
     path:     /recuperandoSenha
     defaults: { _controller: AutenticacaoBundle:Usuario:recuperarandosenha }
+
+faleconosco:
+    path:     /faleConosco
+    defaults: { _controller: AutenticacaoBundle:Public:faleconosco }
+
+mensagem:
+    path:     /mensagem/{tipoMensagem}
+    defaults: { _controller: AutenticacaoBundle:Public:mensagem }
+
+faleconosco_requisicao:
+    path:     /enviarMensagemFaleConosco
+    defaults: { _controller: AutenticacaoBundle:Public:faleconoscoRequisicao }

@@ -71,8 +71,8 @@
                 </tr>
                 <tr>
                     {% if entity.status == "Em Aberto" %}
-                        <th colspan="3"><h4><a class="btn btn-warning label" href="{{ path('solicitacao_edit', { 'id': entity.id }) }}">Editar</a></h4></th>
-                        <th align="right"><h4><a type="button" class="btn btn-danger label" data-toggle="modal" data-target="#exampleModal">Cancelar Solicitação</a></h4></th>
+                        <th colspan="3"><h4><a class="btn btn-warning label" href="{{ path('solicitacao_edit', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-pencil"></i> Editar</a></h4></th>
+                        <th align="right"><h4><a type="button" class="btn btn-danger label" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-trash"></i> Cancelar Solicitação</a></h4></th>
                         {#                    <a class="btn btn-danger label" href="{{ path('solicitacao_cancelar', { 'id': entity.id }) }}">Cancelar</a>#}
                     {% endif %}
                 </tr>

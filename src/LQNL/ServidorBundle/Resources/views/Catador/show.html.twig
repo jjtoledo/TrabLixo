@@ -1,44 +1,67 @@
-{% extends '::base.html.twig' %}
+{% extends '::templateAllAdmin.html.twig' %}
 
-{% block body -%}
-    <h1>Catador</h1>
+{% block container %}
+    <div class="col-lg-9">
+        <h3>
+            <a class="btn btn-primary label" href="{{ path('catadores') }}"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>
+            Catador ID: {{ entity.id }}
+        </h3>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nome</th>
-                <td>{{ entity.nome }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ entity.email }}</td>
-            </tr>
-            <tr>
-                <th>Telefone</th>
-                <td>{{ entity.telefone }}</td>
-            </tr>
-            <tr>
-                <th>Nascimento</th>
-                <td>{{ entity.nascimento|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('catadores') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('catadores_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+        <table class="table table-responsive table-hover">
+            <tbody>
+                <tr>
+                    <th width="30%">Nome</th>
+                    <td>{{ entity.nome }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ entity.email }}</td>
+                </tr>
+                <tr>
+                    <th>Telefone</th>
+                    <td>{{ entity.telefone }}</td>
+                </tr>
+                <tr>
+                    <th>Data de Nascimento</th>
+                    <td>{{ entity.nascimento|date('d-m-Y') }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <h4 align="right">
+                            <a class="btn btn-warning label" href="{{ path('catadores_edit', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-pencil"></i> Editar Catador</a>
+                            <a type="button" class="btn btn-danger label" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-trash"></i> Deletar Catador</a>    
+                        </h4>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" role="alert">
+                            <span><h5><b>Atenção!</b><br/>Deseja realmente deletar este catador?</h5></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <table>
+                            <tr>
+                                <td class='col-lg-9'> 
+                                    <button type="button" class="btn btn-default"  data-dismiss="modal">Nao</button>
+                                </td>
+                                <td> 
+                                    {{ form_start(delete_form) }}
+                                    {{ form_widget(delete_form.submit, { 'attr' : {'class': 'btn'}, 'label': 'Sim, desejo deletar' }) }}
+                                    {{ form_end(delete_form) }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
