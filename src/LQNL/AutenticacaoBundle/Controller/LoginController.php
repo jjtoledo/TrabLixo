@@ -34,9 +34,13 @@ class LoginController extends Controller {
 
     public function homeAction() {
         $user = $this->getUser();
-        return $this->render('AutenticacaoBundle:Login:home.html.twig', array(
-                    'usuario' => $user,
-        ));
+        if ($user->getTipo() == 1) {
+            return $this->render('AutenticacaoBundle:Login:home.html.twig', array(
+                        'usuario' => $user,
+            ));
+        } else {
+            return $this->redirect($this->generateUrl('home_admin'));
+        }
     }
 
     public function testeAction(Request $request) {

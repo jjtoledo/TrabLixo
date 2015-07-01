@@ -1,6 +1,6 @@
 servidor:
     resource: "@ServidorBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /admin
 
 cliente:
     resource: "@ClienteBundle/Resources/config/routing.yml"

@@ -1,0 +1,30 @@
+administradores:
+    path:     /
+    defaults: { _controller: "ServidorBundle:Usuario:index" }
+
+administradores_show:
+    path:     /{id}/show
+    defaults: { _controller: "ServidorBundle:Usuario:show" }
+
+administradores_new:
+    path:     /new
+    defaults: { _controller: "ServidorBundle:Usuario:new" }
+
+administradores_create:
+    path:     /create
+    defaults: { _controller: "ServidorBundle:Usuario:create" }
+    requirements: { _method: post }
+
+administradores_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ServidorBundle:Usuario:edit" }
+
+administradores_update:
+    path:     /{id}/update
+    defaults: { _controller: "ServidorBundle:Usuario:update" }
+    requirements: { _method: post|put }
+
+administradores_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ServidorBundle:Usuario:delete" }
+    requirements: { _method: post|delete }

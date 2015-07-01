@@ -1,0 +1,26 @@
+solicitacoes:
+    path:     /
+    defaults: { _controller: "ServidorBundle:Solicitacao:index" }
+    
+solicitacoes_pedentes:
+    path:     /pendentes
+    defaults: { _controller: "ServidorBundle:Solicitacao:pendentes" }
+
+solicitacoes_em_atendimento:
+    path:     /emAtendimento
+    defaults: { _controller: "ServidorBundle:Solicitacao:ematendimento" }
+
+solicitacoes_concluidas:
+    path:     /concluidas
+    defaults: { _controller: "ServidorBundle:Solicitacao:concluidas" }
+
+solicitacoes_canceladas:
+    path:     /canceladas
+    defaults: { _controller: "ServidorBundle:Solicitacao:canceladas" }
+
+solicitacoes_show:
+    path:     /{id}/show
+    defaults: { _controller: "ServidorBundle:Solicitacao:show" }
+
+
+

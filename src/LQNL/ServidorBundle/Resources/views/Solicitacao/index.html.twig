@@ -1,0 +1,89 @@
+{% extends '::templateAllAdmin.html.twig' %}
+{% block stylessheetsextra %}
+    <link href="{{asset('bundles/autenticacao/css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css">
+{%endblock%}
+
+{% block container %}
+    <div class="col-lg-9">
+        <h1>Solicitações</h1>
+        <table id="tabela" class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>Abertura</th>
+                    <th>Observacoes</th>
+                    <th>Papel</th>
+                    <th>Metal</th>
+                    <th>Eletronico</th>
+                    <th>Vidro</th>
+                    <th>Plastico</th>
+                    <th>Outros</th>
+                    <th>Status</th>
+                    <th style="display: none;"></th>
+                        {#                    <th style="display: none;"></th>#}
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities | reverse %}
+                    <tr>
+                        <td><span style="display: none;">{{ entity.data|date('Y-m-d') }}</span>{{ entity.data | date('d/m/Y') }}</td>
+                        <td>{{ entity.observacoes |slice(0,15) }}...</td>
+                        <td>{{ entity.papel }}</td>
+                        <td>{{ entity.metal }}</td>
+                        <td>{{ entity.eletronico }}</td>
+                        <td>{{ entity.vidro }}</td>
+                        <td>{{ entity.plastico }}</td>
+                        <td>{{ entity.outros }}</td>
+                        {% if entity.status == "Em Aberto" %}
+                            <td><span class="text-info">{{ entity.status }}</span></td>
+                            {% elseif entity.status == "Em Atendimento" %}
+                            <td><span class="text-warning">{{ entity.status }}</span></td>
+                            {% elseif entity.status == "Concluída" %}
+                            <td><span class="text-success">{{ entity.status }}</span></td>
+                            {% elseif entity.status == "Cancelada" %}
+                            <td><span class="text-danger">{{ entity.status }}</span></td>
+                            {% endif %}
+                        <td>
+                            <div class="dropdown">
+                                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Opções <i class="glyphicon glyphicon-collapse-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="alert-info" href="{{ path('solicitacoes_show', { 'id': entity.id }) }}">Visualizar</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        {#<td>
+                        <a class="btn btn-default" href="{{ path('solicitacao_show', { 'id': entity.id }) }}">Visualizar</a>
+                            <a class="btn btn-warning" href="{{ path('solicitacao_edit', { 'id': entity.id }) }}">Editar</a>
+                        </td>#}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block scriptsextra %}
+    <script src="{{asset('bundles/autenticacao/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/autenticacao/js/dataTables.bootstrap.js')}}" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#tabela').dataTable({
+                "order": [[0, "desc"]],
+                "oLanguage": {
+                    "sProcessing": "Aguarde enquanto os dados são carregados ...",
+                    "sLengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "sZeroRecords": "Nenhum registro correspondente ao criterio encontrado",
+                    "sInfoEmtpy": "Exibindo 0 a 0 de 0 registros",
+                    "sInfo": "Exibindo de _START_ a _END_ (de  _TOTAL_ registros no total)",
+                    "sInfoFiltered": "",
+                    "sSearch": "Procurar:",
+                    "oPaginate": {
+                        "sFirst": "Primeiro",
+                        "sPrevious": "Anterior",
+                        "sNext": "Próximo",
+                        "sLast": "Último"
+                    }
+                }
+            });
+        });
+    </script>
+{%endblock%}

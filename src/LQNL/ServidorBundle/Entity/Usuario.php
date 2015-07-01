@@ -3,12 +3,14 @@
 namespace LQNL\ServidorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
  * Usuario
  */
-class Usuario
-{
+class Usuario implements UserInterface, EquatableInterface {
+
     /**
      * @var integer
      */
@@ -35,23 +37,21 @@ class Usuario
     private $password;
 
     /**
-     * @var integer
+     * @var string
      */
     private $tipo;
 
     /**
-     * @var \LQNL\ServidorBundle\Entity\Endereco
+     * @var \LQNL\AutenticacaoBundle\Entity\Endereco
      */
     private $endereco;
-
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -61,8 +61,7 @@ class Usuario
      * @param string $nome
      * @return Usuario
      */
-    public function setNome($nome)
-    {
+    public function setNome($nome) {
         $this->nome = $nome;
 
         return $this;
@@ -73,8 +72,7 @@ class Usuario
      *
      * @return string 
      */
-    public function getNome()
-    {
+    public function getNome() {
         return $this->nome;
     }
 
@@ -84,8 +82,7 @@ class Usuario
      * @param string $telefone
      * @return Usuario
      */
-    public function setTelefone($telefone)
-    {
+    public function setTelefone($telefone) {
         $this->telefone = $telefone;
 
         return $this;
@@ -96,8 +93,7 @@ class Usuario
      *
      * @return string 
      */
-    public function getTelefone()
-    {
+    public function getTelefone() {
         return $this->telefone;
     }
 
@@ -107,8 +103,7 @@ class Usuario
      * @param string $username
      * @return Usuario
      */
-    public function setUsername($username)
-    {
+    public function setUsername($username) {
         $this->username = $username;
 
         return $this;
@@ -119,8 +114,7 @@ class Usuario
      *
      * @return string 
      */
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->username;
     }
 
@@ -130,8 +124,7 @@ class Usuario
      * @param string $password
      * @return Usuario
      */
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         $this->password = $password;
 
         return $this;
@@ -142,19 +135,17 @@ class Usuario
      *
      * @return string 
      */
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->password;
     }
 
     /**
      * Set tipo
      *
-     * @param integer $tipo
+     * @param int $tipo
      * @return Usuario
      */
-    public function setTipo($tipo)
-    {
+    public function setTipo($tipo) {
         $this->tipo = $tipo;
 
         return $this;
@@ -163,21 +154,19 @@ class Usuario
     /**
      * Get tipo
      *
-     * @return integer 
+     * @return string 
      */
-    public function getTipo()
-    {
+    public function getTipo() {
         return $this->tipo;
     }
 
     /**
      * Set endereco
      *
-     * @param \LQNL\ServidorBundle\Entity\Endereco $endereco
+     * @param \LQNL\AutenticacaoBundle\Entity\Endereco $endereco
      * @return Usuario
      */
-    public function setEndereco(\LQNL\ServidorBundle\Entity\Endereco $endereco = null)
-    {
+    public function setEndereco(\LQNL\AutenticacaoBundle\Entity\Endereco $endereco = null) {
         $this->endereco = $endereco;
 
         return $this;
@@ -186,10 +175,43 @@ class Usuario
     /**
      * Get endereco
      *
-     * @return \LQNL\ServidorBundle\Entity\Endereco 
+     * @return \LQNL\AutenticacaoBundle\Entity\Endereco 
      */
-    public function getEndereco()
-    {
+    public function getEndereco() {
         return $this->endereco;
     }
+
+    public function eraseCredentials() {
+        
+    }
+
+    public function getRoles() {
+        if ($this->tipo == 1) {
+            return array("ROLE_USER");
+        } elseif ($this->tipo == 2) {
+            return array("ROLE_ADMIN");
+        }
+//            return array("ROLE_ADMIN");
+    }
+
+    public function getSalt() {
+        return strlen($this->nome);
+    }
+
+    public function isEqualTo(UserInterface $user) {
+        if (!$user instanceof Usuario) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

@@ -4,6 +4,10 @@ security:
             algorithm: sha512
             encode_as_base64: false
             iterations: 7
+        LQNL\ServidorBundle\Entity\Usuario:
+            algorithm: sha512
+            encode_as_base64: false
+            iterations: 7
 
     role_hierarchy:
         ROLE_USER:       IS_AUTHENTICATED_ANONYMOUSLY

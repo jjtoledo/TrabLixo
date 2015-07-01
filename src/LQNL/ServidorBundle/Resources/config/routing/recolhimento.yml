@@ -1,0 +1,30 @@
+recolhimentos:
+    path:     /
+    defaults: { _controller: "ServidorBundle:Recolhimento:index" }
+
+recolhimentos_show:
+    path:     /{id}/show
+    defaults: { _controller: "ServidorBundle:Recolhimento:show" }
+
+recolhimentos_new:
+    path:     /new
+    defaults: { _controller: "ServidorBundle:Recolhimento:new" }
+
+recolhimentos_create:
+    path:     /create
+    defaults: { _controller: "ServidorBundle:Recolhimento:create" }
+    requirements: { _method: post }
+
+recolhimentos_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ServidorBundle:Recolhimento:edit" }
+
+recolhimentos_update:
+    path:     /{id}/update
+    defaults: { _controller: "ServidorBundle:Recolhimento:update" }
+    requirements: { _method: post|put }
+
+recolhimentos_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ServidorBundle:Recolhimento:delete" }
+    requirements: { _method: post|delete }

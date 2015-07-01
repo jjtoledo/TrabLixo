@@ -1,3 +1,22 @@
-servidor_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: ServidorBundle:Default:index }
+servidor_administradores:
+    resource: "@ServidorBundle/Resources/config/routing/usuario.yml"
+    prefix:   /administradores
+
+servidor_solicitacoes:
+    resource: "@ServidorBundle/Resources/config/routing/solicitacao.yml"
+    prefix:   /solicitacoes
+
+servidor_recolhimentos:
+    resource: "@ServidorBundle/Resources/config/routing/recolhimento.yml"
+    prefix:   /recolhimentos
+
+servidor_catadores:
+    resource: "@ServidorBundle/Resources/config/routing/catador.yml"
+    prefix:   /catadores
+
+home_admin:
+    path:     /home
+    defaults: { _controller: ServidorBundle:Default:homeAdmin }
+perfil_admin:
+    path:     /{id}/perfil
+    defaults: { _controller: ServidorBundle:Default:perfil }

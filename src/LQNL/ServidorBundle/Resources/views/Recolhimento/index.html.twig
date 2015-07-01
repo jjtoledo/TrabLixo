@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Recolhimento list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Data</th>
+                <th>Papel</th>
+                <th>Metal</th>
+                <th>Eletronico</th>
+                <th>Vidro</th>
+                <th>Plastico</th>
+                <th>Outros</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('recolhimentos_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{% if entity.data %}{{ entity.data|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.papel }}</td>
+                <td>{{ entity.metal }}</td>
+                <td>{{ entity.eletronico }}</td>
+                <td>{{ entity.vidro }}</td>
+                <td>{{ entity.plastico }}</td>
+                <td>{{ entity.outros }}</td>
+                <td>{{ entity.total }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('recolhimentos_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('recolhimentos_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('recolhimentos_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

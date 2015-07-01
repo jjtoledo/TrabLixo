@@ -234,7 +234,7 @@ class UsuarioController extends Controller {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('login'));
+        return $this->redirect($this->generateUrl('logout'));
     }
 
     /**

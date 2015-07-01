@@ -6,8 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function homeAdminAction()
     {
-        return $this->render('ServidorBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('ServidorBundle:Default:homeAdmin.html.twig', array(
+            'usuario' => $this->getUser()));
     }
 }

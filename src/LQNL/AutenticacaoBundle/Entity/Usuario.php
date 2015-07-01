@@ -186,9 +186,11 @@ class Usuario implements UserInterface, EquatableInterface {
     }
 
     public function getRoles() {
-//        if($this->tipo == 1){
-        return array("ROLE_USER");
-//        }
+        if ($this->tipo == 1) {
+            return array("ROLE_USER");
+        } elseif ($this->tipo == 2) {
+            return array("ROLE_ADMIN");
+        }
 //            return array("ROLE_ADMIN");
     }
 

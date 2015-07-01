@@ -220,4 +220,13 @@ class Endereco
     {
         return $this->complemento;
     }
+    
+    /**
+     * toString
+     *
+     * @return string 
+     */
+    public function __toString() {
+        return 'Rua ' . $this->rua . ' nº ' . $this->getNumero() . ", Bairro " . $this->bairro . ', '. $this->getCidade() . ' - '. $this->getUf() . ', Complemento: ' . $this->getComplemento();
+    }
 }

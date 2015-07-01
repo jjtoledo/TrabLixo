@@ -1,0 +1,30 @@
+catadores:
+    path:     /
+    defaults: { _controller: "ServidorBundle:Catador:index" }
+
+catadores_show:
+    path:     /{id}/show
+    defaults: { _controller: "ServidorBundle:Catador:show" }
+
+catadores_new:
+    path:     /new
+    defaults: { _controller: "ServidorBundle:Catador:new" }
+
+catadores_create:
+    path:     /create
+    defaults: { _controller: "ServidorBundle:Catador:create" }
+    requirements: { _method: post }
+
+catadores_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ServidorBundle:Catador:edit" }
+
+catadores_update:
+    path:     /{id}/update
+    defaults: { _controller: "ServidorBundle:Catador:update" }
+    requirements: { _method: post|put }
+
+catadores_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ServidorBundle:Catador:delete" }
+    requirements: { _method: post|delete }

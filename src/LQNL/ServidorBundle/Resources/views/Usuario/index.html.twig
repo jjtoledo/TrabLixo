@@ -1,0 +1,56 @@
+{% extends '::templateAllAdmin.html.twig' %}
+{% block stylessheetsextra %}
+    <link href="{{asset('bundles/autenticacao/css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css">
+{%endblock%}
+{% block container %}
+    <div class="col-lg-9">
+        <h1>Administradores</h1>
+        <a class="btn btn-primary" href="{{ path('administradores_new') }}">
+            Novo Administrador
+        </a>
+        <table id="tabela" class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.nome }}</td>
+                        <td>{{ entity.username }}</td>
+                        <td>{{ entity.telefone }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block scriptsextra %}
+    <script src="{{asset('bundles/autenticacao/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/autenticacao/js/dataTables.bootstrap.js')}}" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#tabela').dataTable({
+                "order": [[0, "asc"]],
+                "oLanguage": {
+                    "sProcessing": "Aguarde enquanto os dados são carregados ...",
+                    "sLengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "sZeroRecords": "Nenhum registro correspondente ao criterio encontrado",
+                    "sInfoEmtpy": "Exibindo 0 a 0 de 0 registros",
+                    "sInfo": "Exibindo de _START_ a _END_ (de  _TOTAL_ registros no total)",
+                    "sInfoFiltered": "",
+                    "sSearch": "Procurar:",
+                    "oPaginate": {
+                        "sFirst": "Primeiro",
+                        "sPrevious": "Anterior",
+                        "sNext": "Próximo",
+                        "sLast": "Último"
+                    }
+                }
+            });
+        });
+    </script>
+{%endblock%}

@@ -1,0 +1,39 @@
+{% extends '::templateAllAdmin.html.twig' %}
+
+{% block container %}
+    <div class="col-lg-9">
+        <h1>Catadores</h1>
+
+        <table id="tabela" class="table table-responsive table-hover ">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Nascimento</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.nome }}</td>
+                        <td>{{ entity.email }}</td>
+                        <td>{{ entity.telefone }}</td>
+                        <td>{% if entity.nascimento %}{{ entity.nascimento|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('catadores_show', { 'id': entity.id }) }}">show</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('catadores_edit', { 'id': entity.id }) }}">edit</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="br">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Lixo que não é Lixo</title>
+        <meta name="generator" content="Bootply" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        {% block stylesheets %}
+            <link href="{{asset('bundles/autenticacao/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+            <link href="{{asset('bundles/autenticacao/css/styles.css')}}" rel="stylesheet" type="text/css">
+            {% block stylessheetsextra %}
+            {%endblock%}
+        {% endblock %}
+    </head>
+
+
+
+    <body>
+
+        {% block barraNavegacao %}
+            <!-- Barra de Navegação -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{{path('login')}}">LQNL</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="navbar-default">
+                        <ul class="nav navbar-nav">          
+                            <li><a href="#">Informações</a></li>
+                            <li><a href="#">Contato</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                {#                                <label class="lead">          #}
+                                <a href="{{ path('administradores_show', { 'id': usuario.id }) }}">{{usuario.nome}}</a>
+                                {#                                </label>#}
+                            </li>
+                            {#<li>
+                                <a>{{data|date('d/M') }}</a>
+                            </li>#}
+                            <li>
+                                <a href="{{path('logout')}}"><i class="glyphicon glyphicon-log-out"></i> Sair</a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </nav><!-- /.navbar-collapse -->
+        {% endblock %}
+
+
+
+
+        <div class="container">
+            <br/><br/><br/><br />
+            <div class="col-lg-12">
+                {#                <br/><br/><br/><br/>#}
+            </div>
+            {% block menu %}
+                <div class="col-md-3">
+                    <p class="lead">Menu</p>
+                    <div class="list-group">
+                        <a class="list-group-item" href="{{path('home')}}">Início</a>
+                        <a href="{{ path('administradores_show', { 'id': usuario.id }) }}" class="list-group-item">Meu Perfil</a>
+                        <a type="button" class="list-group-item" href="javascript:void(0);" onclick="return trocar(subMenuSlocitacoes);">Solicitacões <i class="glyphicon glyphicon-collapse-down"></i></a>
+                        <div id="subMenuSlocitacoes" class="list-group" style="display: none;">
+                            <a href="{{path('solicitacoes_pedentes')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Pendentes</span></a>
+                            <a href="{{path('solicitacoes_em_atendimento')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Em Atendimento</span></a>
+                            <a href="{{path('solicitacoes_concluidas')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Concluídas</span></a>
+                            <a href="{{path('solicitacoes_canceladas')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Canceladas</span></a>
+                            <a href="{{path('solicitacoes')}}" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Todas</span></a>
+                        </div>
+                        <a type="button" class="list-group-item" href="javascript:void(0);" onclick="return trocar(subMenuRecolhimentos);">Recolhimentos <i class="glyphicon glyphicon-collapse-down"></i></a>
+                        <div id="subMenuRecolhimentos" class="list-group" style="display: none;">
+                            <a href="#" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Cadastrar Novo</span></a>
+                            <a href="#" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Recolhidos Hoje</span></a>
+                            <a href="#" class="list-group-item"><span class="text-info"><i class='glyphicon glyphicon-circle-arrow-right'></i> Todos</span></a>
+                        </div>
+                        <a href="{{path('catadores')}}" class="list-group-item">Catadores</a>
+                        <a href="{{path('administradores')}}" class="list-group-item">Administradores</a>
+                        <a href="#" class="list-group-item">Relatórios</a>
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block container %}
+            {% endblock %}
+        </div>
+
+
+
+
+        {% block rodape %}
+            <!-- /.container -->
+
+            <div class="container">
+
+                <hr>
+
+                <!-- Footer -->
+                <footer>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>ICEA &copy; LQNL 2015</p>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+            <!-- /.container -->
+        {% endblock %}
+
+
+        {% block javascripts %}
+            <!-- script references -->
+            <script src="{{asset('bundles/autenticacao/js/jquery.js')}}" type="text/javascript"></script>
+            <script src="{{asset('bundles/autenticacao/js/bootstrap.min.js')}}" type="text/javascript"></script>
+            <script type="text/javascript">
+                            function trocar(obj) {
+                                if (obj.style.display == "none") {
+                                    obj.style.display = "block";
+                                } else {
+                                    obj.style.display = "none";
+                                }
+                            }
+            </script>
+            {% block scriptsextra %}
+            {%endblock%}
+        {% endblock %}
+    </body>
+
+
+</html>
