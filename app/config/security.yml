@@ -47,8 +47,10 @@ security:
         - { path: ^/novoUsuario, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/recuperarSenha, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/recuperandoSenha, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/faleConosco, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/home, roles: ROLE_USER }
         - { path: ^/edit, roles: ROLE_USER }
         - { path: ^/show, roles: ROLE_USER }
         - { path: ^/solicitacao, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
 #        - { path: ^/usuarios, roles: ROLE_USER }
