@@ -53,6 +53,19 @@ class SolicitacaoController extends Controller {
             $form = $this->createCreateForm($entity);
             $form->handleRequest($request);
 
+            if ($entity->getEletronico() == 0)
+                $entity->setEletronico(0);
+            if ($entity->getMetal() == 0)
+                $entity->setMetal(0);
+            if ($entity->getOutros() == 0)
+                $entity->setOutros(0);
+            if ($entity->getPapel() == 0)
+                $entity->setPapel(0);
+            if ($entity->getPlastico() == 0)
+                $entity->setPlastico(0);
+            if ($entity->getVidro() == 0)
+                $entity->setVidro(0);
+
             $entity->setUsuario($user);
             $entity->setStatus($status);
             $entity->setData($dataabertura);
