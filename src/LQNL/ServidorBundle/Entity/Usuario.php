@@ -42,7 +42,7 @@ class Usuario implements UserInterface, EquatableInterface {
     private $tipo;
 
     /**
-     * @var \LQNL\AutenticacaoBundle\Entity\Endereco
+     * @var \LQNL\ServidorBundle\Entity\Endereco
      */
     private $endereco;
 
@@ -163,10 +163,10 @@ class Usuario implements UserInterface, EquatableInterface {
     /**
      * Set endereco
      *
-     * @param \LQNL\AutenticacaoBundle\Entity\Endereco $endereco
+     * @param \LQNL\ServidorBundle\Entity\Endereco $endereco
      * @return Usuario
      */
-    public function setEndereco(\LQNL\AutenticacaoBundle\Entity\Endereco $endereco = null) {
+    public function setEndereco(\LQNL\ServidorBundle\Entity\Endereco $endereco = null) {
         $this->endereco = $endereco;
 
         return $this;
@@ -175,7 +175,7 @@ class Usuario implements UserInterface, EquatableInterface {
     /**
      * Get endereco
      *
-     * @return \LQNL\AutenticacaoBundle\Entity\Endereco 
+     * @return \LQNL\ServidorBundle\Entity\Endereco 
      */
     public function getEndereco() {
         return $this->endereco;
